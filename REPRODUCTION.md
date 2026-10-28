@@ -82,6 +82,17 @@ python3 query_llms.py --profile codex --prompt "在这里放入图问题文本"
 
 要复现准确率，需要对一批随机图重复生成问题、记录模型回答，并根据任务类型解析答案。论文中的 GraphQA 评测主要比较的就是编码方式、提问方式、图结构和模型规模对准确率的影响。
 
+本项目还提供了一个 10 图环检测小实验：
+
+```bash
+PYTHONPATH=. talk-like-a-graph/.venv311/bin/python \
+  experiments/graph_api_trial.py
+```
+
+它使用固定随机种子和 `incident` 编码，分别询问 GLM、DeepSeek 和 Codex
+接口，并将原始回答保存到 `experiments/graph_api_trial_results.json`。Codex
+网关通过其 OpenAI-compatible `/v1/chat/completions` 路由调用。
+
 ## 当前限制
 
 - 论文实验依赖 PaLM 62B/PaLM 2 服务；本地仓库不包含这些模型权重或原始服务配置。

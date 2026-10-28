@@ -48,6 +48,8 @@ class Profile:
     def endpoint(self) -> str:
         if self.api == "anthropic":
             return self.base_url.rstrip("/") + "/v1/messages"
+        if self.api == "openai_chat":
+            return self.base_url.rstrip("/") + "/v1/chat/completions"
         # The local Codex config uses the gateway root as base_url; Codex's
         # responses wire appends /responses (rather than adding another /v1).
         return self.base_url.rstrip("/") + "/responses"
@@ -74,12 +76,12 @@ PROFILES = {
     ),
     "codex": Profile(
         name="codex",
-        api="responses",
+        api="openai_chat",
         base_url=os.environ.get("CODEX_BASE_URL", "http://35.173.184.233:8080"),
         model=os.environ.get("CODEX_MODEL", "gpt-6-astra"),
         secret_file=CODEX_HOME / "auth.json",
         secret_name="OPENAI_API_KEY",
-        description="OpenAI Responses-compatible Codex gateway",
+        description="OpenAI-compatible Codex gateway",
     ),
 }
 
@@ -119,7 +121,12 @@ def _secret_for(profile: Profile) -> Optional[str]:
             return value if isinstance(value, str) and value else None
         except (OSError, ValueError):
             return None
-    return _env_file_value(profile.secret_file, profile.secret_name)
+    value = _env_file_value(profile.secret_file, profile.secret_name)
+    # Match the local claude-ds launcher, which tolerates one accidental
+    # trailing quote in the DeepSeek env file.
+    if value and profile.secret_name == "DEEPSEEK_API_KEY" and value.endswith('"'):
+        value = value[:-1]
+    return value
 
 
 def _content_text(value: Any) -> str:
@@ -165,6 +172,43 @@ def _extract_text(data: Dict[str, Any], api: str) -> str:
     return ""
 
 
+def _decode_response_body(body: str, content_type: str) -> Dict[str, Any]:
+    """Decode JSON or the SSE form returned by the local Responses gateway."""
+    if "text/event-stream" not in content_type and not body.lstrip().startswith("event:"):
+        try:
+            data = json.loads(body)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError("gateway returned non-JSON data") from exc
+        if not isinstance(data, dict):
+            raise RuntimeError("gateway returned an unexpected JSON shape")
+        return data
+
+    deltas = []
+    completed = None
+    for line in body.splitlines():
+        if not line.startswith("data:"):
+            continue
+        payload = line[5:].strip()
+        if not payload or payload == "[DONE]":
+            continue
+        try:
+            event = json.loads(payload)
+        except json.JSONDecodeError:
+            continue
+        if event.get("type") == "response.output_text.delta":
+            delta = event.get("delta")
+            if isinstance(delta, str):
+                deltas.append(delta)
+        elif event.get("type") == "response.completed":
+            completed = event.get("response")
+    if isinstance(completed, dict):
+        if deltas and not completed.get("output_text"):
+            completed = dict(completed)
+            completed["output_text"] = "".join(deltas)
+        return completed
+    return {"output_text": "".join(deltas)}
+
+
 def _request_json(profile: Profile, prompt: str, secret: str, max_tokens: int, timeout: float) -> Dict[str, Any]:
     if profile.api == "anthropic":
         payload = {
@@ -176,6 +220,16 @@ def _request_json(profile: Profile, prompt: str, secret: str, max_tokens: int, t
             "Authorization": f"Bearer {secret}",
             "x-api-key": secret,
             "anthropic-version": "2023-06-01",
+            "Content-Type": "application/json",
+        }
+    elif profile.api == "openai_chat":
+        payload = {
+            "model": profile.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": max_tokens,
+        }
+        headers = {
+            "Authorization": f"Bearer {secret}",
             "Content-Type": "application/json",
         }
     else:
@@ -197,18 +251,33 @@ def _request_json(profile: Profile, prompt: str, secret: str, max_tokens: int, t
     )
     try:
         with urlopen(request, timeout=timeout) as response:
-            body = response.read().decode("utf-8")
+            content_type = response.headers.get("content-type", "")
+            if "text/event-stream" in content_type:
+                # The local Responses gateway keeps the SSE connection open;
+                # stop once the terminal response.completed event arrives.
+                lines = []
+                for raw_line in response:
+                    line = raw_line.decode("utf-8", errors="replace")
+                    lines.append(line)
+                    if line.startswith("data:"):
+                        try:
+                            event = json.loads(line[5:].strip())
+                        except json.JSONDecodeError:
+                            continue
+                        if event.get("type") == "response.completed":
+                            break
+                body = "".join(lines)
+            else:
+                body = response.read().decode("utf-8")
     except HTTPError as exc:
         # Do not echo the response body: some gateways include request metadata.
         raise RuntimeError(f"{profile.name}: HTTP {exc.code} from {profile.endpoint}") from exc
     except URLError as exc:
         raise RuntimeError(f"{profile.name}: connection failed ({exc.reason})") from exc
     try:
-        data = json.loads(body)
-    except json.JSONDecodeError as exc:
-        raise RuntimeError(f"{profile.name}: gateway returned non-JSON data") from exc
-    if not isinstance(data, dict):
-        raise RuntimeError(f"{profile.name}: gateway returned an unexpected JSON shape")
+        data = _decode_response_body(body, content_type)
+    except RuntimeError as exc:
+        raise RuntimeError(f"{profile.name}: {exc}") from exc
     if data.get("error"):
         error = data["error"]
         message = error.get("message", "unknown API error") if isinstance(error, dict) else str(error)
