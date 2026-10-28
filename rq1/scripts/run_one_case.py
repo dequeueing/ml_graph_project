@@ -49,6 +49,16 @@ def normalize_answer(task: str, text: str):
     return None if match is None else int(match.group(0))
 
 
+def extract_usage(response: object) -> dict:
+    if not isinstance(response, dict):
+        return {}
+    for key in ("usage", "usage_metadata"):
+        usage = response.get(key)
+        if isinstance(usage, dict):
+            return usage
+    return {}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -77,6 +87,7 @@ def main() -> None:
         timeout=args.timeout,
     )
     parsed = normalize_answer(case["task"], response["text"])
+    usage = extract_usage(response.get("response"))
     result = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "manifest": str(manifest_path.relative_to(ROOT)),
@@ -86,6 +97,7 @@ def main() -> None:
         "case": case,
         "prompt": prompt,
         "raw_answer": response["text"],
+        "usage": usage,
         "parsed_answer": parsed,
         "ground_truth": case["answer"],
         "valid": parsed is not None,
@@ -101,6 +113,7 @@ def main() -> None:
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"profile={response['profile']} model={response['model']}")
     print(f"task={case['task']} ground_truth={case['answer']} parsed={parsed} correct={result['correct']}")
+    print(f"usage={usage}")
     print(f"saved={output}")
 
 

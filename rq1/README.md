@@ -84,6 +84,8 @@ The script reads one manifest record, builds the task prompt, calls the selected
 
 A seven-case topology pilot was then run with the same profile, task, and adjacency encoding. It used one case from each of ER, BA, SFN, SBM, path, star, and complete graphs. All seven responses were valid and matched their ground-truth labels. The records are stored as `results/one_case_codex_index_<index>.json`; this pilot is still an infrastructure check, not a benchmark result.
 
+The runner now records API usage metadata when the gateway returns it. A measurement call for case index 0 used 804 prompt tokens and 5 completion tokens, for 809 total tokens. The gateway did not return a monetary price, and the local configuration does not contain a price table, so an exact dollar cost cannot currently be reported. The remaining pilot records were created before usage logging was added. Their prompt lengths imply roughly 3,000 input tokens and 35 output tokens for all seven calls combined, but this is only a planning estimate. Future pilot and benchmark calls must record usage before we scale up.
+
 ## Status
 
 The smoke and one-case validation stages are complete. The next step is to freeze the small pilot configuration and decide the formal RQ1 sample size before running additional model calls.
