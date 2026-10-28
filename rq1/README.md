@@ -80,8 +80,10 @@ After the smoke manifest has been generated, one complete model call can be run 
 python3 rq1/scripts/run_one_case.py --profile codex --index 0
 ```
 
-The script reads one manifest record, builds the task prompt, calls the selected local API, extracts the answer, compares it with the stored ground truth, and writes the complete audit record to `results/one_case_<profile>.json`. The first validation used `codex` with the configured `gpt-6-luna` model on an edge-existence case. The API returned `Yes`, the parser produced `true`, and the stored ground truth was `true`, so the case was judged correct. This confirms the graph-to-prompt, API, parsing, and scoring path before any larger run.
+The script reads one manifest record, builds the task prompt, calls the selected local API, extracts the answer, compares it with the stored ground truth, and writes the complete audit record to `results/one_case_<profile>_index_<index>.json`. The first validation used `codex` with the configured `gpt-6-luna` model on an edge-existence case. The API returned `Yes`, the parser produced `true`, and the stored ground truth was `true`, so the case was judged correct. This confirms the graph-to-prompt, API, parsing, and scoring path before any larger run.
+
+A seven-case topology pilot was then run with the same profile, task, and adjacency encoding. It used one case from each of ER, BA, SFN, SBM, path, star, and complete graphs. All seven responses were valid and matched their ground-truth labels. The records are stored as `results/one_case_codex_index_<index>.json`; this pilot is still an infrastructure check, not a benchmark result.
 
 ## Status
 
-This directory currently contains the experiment specification only. The next step is to finalize the fixed encoding, generate the shared manifest from the GraphQA implementation, and validate the answer parser before running the model APIs.
+The smoke and one-case validation stages are complete. The next step is to freeze the small pilot configuration and decide the formal RQ1 sample size before running additional model calls.

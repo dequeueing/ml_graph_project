@@ -60,6 +60,7 @@ def main() -> None:
     parser.add_argument("--profile", default="codex", choices=sorted(query_llms.PROFILES))
     parser.add_argument("--max-tokens", type=int, default=64)
     parser.add_argument("--timeout", type=float, default=120.0)
+    parser.add_argument("--output", help="optional result path relative to the project root")
     args = parser.parse_args()
 
     manifest_path = ROOT / args.manifest
@@ -91,7 +92,11 @@ def main() -> None:
         "correct": parsed == case["answer"],
     }
 
-    output = ROOT / "rq1" / "results" / f"one_case_{args.profile}.json"
+    output = (
+        ROOT / args.output
+        if args.output
+        else ROOT / "rq1" / "results" / f"one_case_{args.profile}_index_{args.index}.json"
+    )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"profile={response['profile']} model={response['model']}")
