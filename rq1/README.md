@@ -72,6 +72,16 @@ We will validate the pipeline in progressively larger steps:
 
 No large-scale model run will be started during this initial validation stage.
 
+## One-case end-to-end validation
+
+After the smoke manifest has been generated, one complete model call can be run with:
+
+```bash
+python3 rq1/scripts/run_one_case.py --profile codex --index 0
+```
+
+The script reads one manifest record, builds the task prompt, calls the selected local API, extracts the answer, compares it with the stored ground truth, and writes the complete audit record to `results/one_case_<profile>.json`. The first validation used `codex` with the configured `gpt-6-luna` model on an edge-existence case. The API returned `Yes`, the parser produced `true`, and the stored ground truth was `true`, so the case was judged correct. This confirms the graph-to-prompt, API, parsing, and scoring path before any larger run.
+
 ## Status
 
 This directory currently contains the experiment specification only. The next step is to finalize the fixed encoding, generate the shared manifest from the GraphQA implementation, and validate the answer parser before running the model APIs.
