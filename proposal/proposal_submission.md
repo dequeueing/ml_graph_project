@@ -1,4 +1,4 @@
-# Revisiting Graph Reasoning in Modern Large Language Models: Reproduction and Extension of GraphQA
+# Revisiting Graph Reasoning in Modern Large Language Models
 
 Authors: Taojie Wang (twangdo@connect.ust.hk); Chiyu Hao (chaoae@connect.ust.hk); Zhengdong Huang (zhuanggm@connect.ust.hk)
 
