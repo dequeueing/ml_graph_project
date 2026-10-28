@@ -11,7 +11,8 @@ large language models reason over graph-structured data.
 - `query_llms.py`: a dependency-free CLI for querying the locally configured
   GLM, DeepSeek, and Codex-compatible gateways. Credentials are read from the
   existing local configuration and are never stored in this repository.
-- `proposal.md`: the project proposal and planned experiments.
+- `proposal/`: the original `proposal.md`, English outline, current submission draft,
+  LaTeX source, and compiled PDF.
 - `REPRODUCTION.md`: what can be reproduced locally, setup commands, and the
   limitations of reproducing the original PaLM experiments.
 

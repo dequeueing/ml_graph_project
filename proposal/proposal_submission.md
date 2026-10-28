@@ -1,0 +1,148 @@
+# Revisiting Graph Reasoning in Modern Large Language Models: Reproduction and Extension of GraphQA
+
+## Abstract
+
+Large language models (LLMs) are increasingly used to reason over information that is naturally represented as a graph, yet their text-based interface may make relational structure difficult to process reliably. This project revisits the GraphQA benchmark introduced by *Talk Like a Graph: Encoding Graphs for Large Language Models* and evaluates whether its findings continue to hold for modern, API-accessible LLMs. We will reproduce representative experiments on edge existence, node degree, and cycle detection, comparing adjacency, incident, and selected natural-language graph encodings under matched graph and prompt conditions. We will then extend the evaluation to graph complexity, representation robustness, and accuracy–cost trade-offs. Graphs will be generated procedurally with controlled topology, size, density, and random seeds, while NetworkX will provide deterministic ground-truth answers. The study will use paired evaluation, explicit experiment manifests, and API-level logging to support reproducibility. In addition to accuracy, we will measure prediction consistency under equivalent representations, token usage, latency, and available cost information. The resulting artifact will provide an updated assessment of graph reasoning in modern LLMs and practical guidance for choosing graph representations in text-based systems.
+
+## 1. Introduction
+
+Large language models have achieved strong results in natural-language understanding, code generation, and multi-step reasoning. Many practical problems, however, are not naturally expressed as independent sequences of words. Social networks, recommendation systems, scientific interactions, financial transactions, and knowledge bases are better described as entities connected by explicit relations. Graphs provide a flexible representation for these systems, with nodes representing entities and edges representing relationships between them.
+
+Using an LLM to answer a question about a graph is not equivalent to asking an ordinary language question. The model must identify the relevant nodes, preserve the relationships expressed in the input, and combine local facts into a correct global answer. A graph supplied through a language-model API must first be serialized into text, which introduces a sequential ordering and may repeat or omit useful structural information. The same graph can therefore become easier or harder to reason about depending on how it is represented.
+
+This issue matters even for elementary graph tasks. Determining whether an edge exists, counting the neighbors of a node, or checking whether a graph contains a cycle can be solved reliably by standard algorithms. An LLM may nevertheless make errors because it loses track of relations, follows surface patterns, or relies on an inaccurate prior about the graph structure. Understanding these failure modes is important before LLMs are used as interfaces to graph databases, knowledge graphs, or graph-based decision-support systems.
+
+The GraphQA benchmark introduced by Fatemi et al. provides a systematic way to study this problem. Their *Talk Like a Graph* study showed that LLM performance depends on the graph encoding, the task, and the topology of the graph. It also reported weak performance on several basic tasks and substantial differences between alternative text encodings. These findings established that graph representation is an experimental variable rather than a neutral formatting choice.
+
+The original experiments were conducted with PaLM 62B and PaLM 2 variants. Modern LLMs have since improved in instruction following, context handling, and general reasoning, but it is not known whether these improvements eliminate the representation sensitivity observed in the original benchmark. The existing results also leave several practical questions open. They do not fully characterize robustness to semantically equivalent reorderings and renamings, and accuracy is not considered together with token usage, latency, or API cost.
+
+There is therefore a need for a controlled re-evaluation that preserves the core GraphQA setting while extending it in directions relevant to current LLM use. A direct comparison with historical PaLM numbers must be interpreted carefully because the models and service conditions are different. Nevertheless, a matched modern evaluation can test whether the original qualitative conclusions remain visible, identify which tasks and graph structures are still difficult, and provide practical evidence about the cost of different encodings.
+
+The project will  reproduce a controlled subset of the GraphQA benchmark and extend it with a set of systematic experiments. We will evaluate modern LLMs on representative graph tasks and encodings, examine how performance changes with graph size, density, topology, and representation changes, and report accuracy together with token usage, latency, request reliability, and available API cost information. Graph-generation settings, prompts, model configurations, and processed results will be documented so that the experiments can be repeated under the same API conditions. The intended outcome is an empirical comparison and a reproducible experiment record rather than a new model or graph-reasoning method.
+
+
+## 2. Background and Related Work
+
+### 2.1 LLMs for Structured and Graph Reasoning
+
+Large language models (LLMs) are trained primarily on sequential text, yet many real-world problems are naturally represented as structured relationships between entities. Graphs provide an explicit representation of these relationships through nodes and edges, and support tasks such as connectivity analysis, path finding, community detection, and link prediction. Reasoning over a graph therefore requires a model to identify entities, preserve relations, and combine local facts into a globally consistent answer.
+
+Although LLMs can perform many forms of natural-language reasoning, their input interface is sequential and their knowledge is encoded through learned statistical representations rather than an explicit graph data structure. A graph supplied as text must therefore be serialized into a sequence of tokens before the model can process it. This serialization may make relevant relations easier or harder to access, and may introduce irrelevant order effects or distracting text. The ability of an LLM to answer a graph question consequently depends on both its reasoning capability and the representation used to present the graph.
+
+Recent work has explored graph-augmented language models, graph neural networks combined with LLMs, and retrieval systems that use knowledge graphs. These approaches often modify the model architecture, training procedure, or access to model parameters. Our study focuses on a complementary black-box setting: the model is accessed through a text-based API, while the graph encoding and question format are controlled externally. This setting reflects how proprietary LLMs are commonly used in practical applications and allows different models to be compared under a common prompting protocol.
+
+### 2.2 Graph-to-Text Encoding and GraphQA
+
+Graph-to-text encoding converts a graph into a natural-language or symbolic description that can be supplied to an LLM. Different encodings expose different parts of the same graph structure. An adjacency encoding lists edges as node pairs, whereas an incident encoding describes each node together with its neighbors. Relation-based encodings replace abstract node identifiers and edge symbols with descriptions such as friendship, co-authorship, or social connection. Node names can also be represented by integers, letters, common names, or fictional characters. These choices may affect tokenization, textual familiarity, locality of relevant information, and the amount of redundant context.
+
+The GraphQA benchmark introduced in *Talk Like a Graph: Encoding Graphs for Large Language Models* (Fatemi et al., 2024) provides a systematic setting for studying these effects. Its basic tasks include edge existence, node degree, node count, edge count, connected nodes, disconnected nodes, and cycle detection. The benchmark generates graphs with a range of structural properties using Erdős–Rényi, Barabási–Albert, scale-free, stochastic block, path, star, and complete graph generators. Ground-truth answers are computed using standard graph algorithms, enabling automatic evaluation of LLM outputs.
+
+The original study evaluates graph encodings together with several prompting strategies, including zero-shot, few-shot, and chain-of-thought prompting. Its results suggest that LLMs perform poorly on many elementary graph tasks, and that accuracy varies substantially with the graph encoding, the task, and the topology of the graph. Incident encoding is particularly effective for some local-neighborhood tasks, while model size generally improves performance on several tasks. The study also reports that models have difficulty reasoning about absent edges and disconnected nodes, indicating that a textual list of observed relations does not necessarily provide a reliable global representation of the graph.
+
+GraphQA is therefore best understood as a procedural benchmark rather than a fixed collection of graph files. Graph instances can be generated with controlled algorithms, sizes, and random seeds, and the same graph can be paired with different encodings and questions. This structure is useful for controlled experiments because it permits paired comparisons while separating graph properties from prompt design.
+
+### 2.3 Research Gap and Motivation for Re-evaluation
+
+The findings of *Talk Like a Graph* were obtained with PaLM 62B and several PaLM 2 variants. Since then, LLMs have improved in instruction following, long-context processing, tool use, and multi-step reasoning. It is therefore unclear whether the limitations observed in the original study still hold for modern models, or whether stronger models have reduced their sensitivity to graph serialization.
+
+Several questions remain open. First, modern models have not been evaluated systematically under the same graph tasks and encoding choices. Second, accuracy alone does not reveal whether a model is robust to semantically equivalent representations, such as reordered edge lists or renamed nodes. Third, more verbose encodings may improve accuracy while substantially increasing input tokens, latency, and API cost. Finally, graph size, density, and topology may interact with representation choices in ways that are not captured by a single aggregate accuracy score.
+
+This project addresses these gaps through a controlled reproduction and extension study. We will reuse the GraphQA task definitions and graph-generation principles, evaluate modern API-accessible LLMs on matched graph instances, and extend the analysis to graph complexity, representation robustness, and accuracy–cost trade-offs. The goal is not to assume that modern models must outperform historical systems, but to determine which properties of graph reasoning remain difficult and which conclusions from the original benchmark continue to generalize.
+
+## 3. Research Questions
+
+The central aim of this project is to determine whether the conclusions of the original GraphQA study continue to hold for modern LLMs. We organize the investigation around five research questions. Together, these questions examine model capability, input representation, graph difficulty, prediction stability, and inference efficiency. The questions are designed to be answerable through paired evaluations in which the graph instance, task, and prompt conditions are explicitly recorded.
+
+### 3.1 RQ1: Model Capability
+
+**Have modern LLMs improved their performance on basic graph reasoning tasks compared with the historical GraphQA results?**
+
+We will evaluate modern API-accessible LLMs on representative GraphQA tasks and compare their performance with the qualitative and quantitative findings reported for PaLM-era models. The comparison will focus on task-level accuracy and error patterns rather than treating differences between independently developed model families as a strict measure of progress. In particular, we will examine whether improvements are consistent across edge existence, node degree, and cycle detection, or whether models remain weak on tasks that require a global view of the graph.
+
+This question also considers the effect of model capability within the modern model set. If two models differ in scale, training objective, or reasoning configuration, we will investigate whether these differences are reflected in graph reasoning accuracy, latency, and failure modes. The analysis will distinguish genuine task improvements from gains caused by an easier graph distribution or a more favorable prompt format.
+
+### 3.2 RQ2: Encoding Sensitivity
+
+**Does the choice of graph-to-text encoding continue to affect reasoning accuracy in modern LLMs?**
+
+The same mathematical graph can be expressed as an adjacency list, an incident-neighbor description, or a natural-language relation graph. We will compare these encodings while holding the underlying graph, question, model, and decoding configuration constant. The primary outcome is whether the relative ranking of encodings remains stable across models and tasks.
+
+We will also examine whether stronger models are less dependent on the encoding format. A reduction in the performance gap between encodings would suggest that model capability can compensate for less accessible representations. Persistent or task-specific differences would indicate that graph serialization remains an important part of the reasoning problem, even when the underlying language model is stronger.
+
+### 3.3 RQ3: Graph Complexity
+
+**How do graph size, density, and topology affect the performance of modern LLMs?**
+
+Graph complexity is not determined by node count alone. Larger graphs create longer textual contexts, denser graphs introduce more relations and potential distractors, and different topologies create different reasoning patterns. We will therefore study graph size, edge density, and generator family as separate but related factors.
+
+The analysis will compare structures such as paths, stars, random graphs, scale-free graphs, stochastic block models, and complete graphs. We will ask whether particular task types are sensitive to specific structural properties—for example, whether cycle detection is easier on graphs with an obvious dense core, or whether node-degree questions become less reliable as the number of incident statements grows. We will also test whether modern models degrade gradually with complexity or exhibit threshold-like failures when the graph exceeds a certain textual or structural scale.
+
+### 3.4 RQ4: Representation Robustness
+
+**Are model predictions invariant to semantically equivalent changes in graph representation?**
+
+Two text descriptions can encode the same graph while differing in node names, edge order, or neighbor-list order. A graph reasoning system should ideally return the same answer for these equivalent representations. We will construct paired or grouped inputs in which one representation is transformed without changing the graph or the ground-truth answer.
+
+We will measure both accuracy and prediction consistency. Accuracy captures whether a model answers a particular instance correctly, while consistency captures whether it changes its prediction when only irrelevant textual details are changed. This distinction is important because a model may achieve high average accuracy while remaining sensitive to token order or familiar node names. The results will help determine whether modern LLMs reason over the underlying relational structure or rely partly on surface-level patterns in the serialization.
+
+### 3.5 RQ5: Accuracy–Cost Trade-off
+
+**How do graph encodings trade off reasoning accuracy against token usage, latency, and monetary cost?**
+
+Graph encodings differ in length and redundancy. An incident encoding may repeat relational information to make local neighborhoods explicit, while an adjacency encoding may use fewer tokens but require the model to reconstruct more structure. We will therefore evaluate efficiency together with accuracy rather than treating the most accurate encoding as automatically preferable.
+
+For each API call, we will record the input token count, output token count, response latency, and available cost information. We will compare encodings using both absolute metrics and efficiency-oriented summaries, such as accuracy per unit of input cost or latency. This question will identify settings in which a modest accuracy improvement requires disproportionate additional context, as well as settings in which a more verbose encoding provides a worthwhile reliability benefit.
+
+Taken together, these questions define a study of graph reasoning as a joint property of the model, the graph, and the textual interface. They also establish a clear separation between capability, representation, complexity, robustness, and efficiency, allowing each factor to be analyzed without attributing every observed difference to model size alone.
+
+## 4. Benchmark and Experimental Methodology
+
+### 4.1 Benchmark, Tasks, and Experimental Setup
+
+We will use the public GraphQA implementation to construct a procedural benchmark of undirected graphs. The benchmark will include representative topology families—Erdős–Rényi, Barabási–Albert, scale-free, stochastic block, path, star, and complete graphs—with controlled graph size, density, and random seeds. Each graph will be stored with its generation parameters and a stable identifier so that every experiment can be reproduced.
+
+The core evaluation will focus on three tasks: edge existence, node degree, and cycle detection. These tasks cover local relation checking, numerical reasoning over a neighborhood, and global structural reasoning. NetworkX will compute the ground-truth answers directly from each graph before it is converted into text. We will use held-out random seeds for the evaluation split and keep positive and negative cases sufficiently balanced for binary tasks.
+
+### 4.2 Models, Encodings, and Experimental Design
+
+The initial model set will include the locally available GLM-5.3, DeepSeek V4.1 Flash, and GPT-6 Luna interfaces. All models will receive the same graph instances, questions, and answer-format instructions under a paired evaluation. The primary comparison will use adjacency and incident encodings from GraphQA; a natural-language relation encoding may be added if the pilot confirms that it can be evaluated consistently. Prompts will use a fixed zero-shot template, and only the normalized final answer will be scored.
+
+The study will proceed in three stages. First, we will reproduce the basic task and encoding comparisons. Second, we will vary graph size, density, and topology to examine complexity effects. Third, we will test representation robustness by renaming nodes and reordering edges or neighbors while preserving the underlying graph. The same evaluation manifest will be sent to every model, allowing direct comparisons across models, tasks, and encodings. Token usage, latency, and available cost information will also be recorded to assess the accuracy–efficiency trade-off.
+
+### 4.3 Evaluation and Reproducibility
+
+The primary metric will be exact-match accuracy after answer normalization. We will also report invalid-response rates, prediction consistency across equivalent representations, and results by task, encoding, and graph family. Confidence intervals and paired comparisons will be used where appropriate, and a short error analysis will distinguish reasoning failures from formatting or API failures.
+
+All graph seeds, task instances, prompts, model configurations, and responses will be recorded in versioned manifests and logs. API credentials will be supplied through environment variables and excluded from the repository. The final artifact will include the benchmark-generation code, evaluation scripts, configuration files, processed result tables, and a concise reproduction guide.
+
+## 5. Project Schedule and Deliverables
+
+### 5.1 Project Schedule
+
+The project will proceed in six stages. The first stage will finalize the benchmark scope, environment, model configuration, and data-management policy. The second stage will implement graph generation, encoding, ground-truth computation, and the API query runner, followed by a small pilot to validate prompts and answer parsing. The third stage will run the reproduction experiments for the selected tasks and encodings. The fourth stage will conduct the complexity and representation-robustness experiments. The fifth stage will perform efficiency analysis, statistical analysis, and error inspection. The final stage will consolidate the results into the report, presentation, and reproducible code artifact.
+
+| Stage | Main activities | Expected output |
+|---|---|---|
+| 1. Scope and setup | Finalize research questions, models, tasks, dependencies, and data policy | Frozen study plan and environment specification |
+| 2. Pipeline implementation | Implement graph generation, encoding, ground truth, API runner, and logging | Working benchmark and pilot configuration |
+| 3. Reproduction | Run matched model, task, and encoding evaluations | Reproduction results and initial error analysis |
+| 4. Extensions | Run complexity and representation-robustness experiments | Extended evaluation results |
+| 5. Analysis | Compute metrics, confidence intervals, token/cost summaries, and error categories | Tables, figures, and interpretation notes |
+| 6. Reporting | Write the final report, prepare slides, and verify reproduction commands | Final report, presentation, and code release |
+
+### 5.2 Deliverables
+
+The final project will provide:
+
+- a documented Python implementation for graph generation, encoding, task construction, API querying, and evaluation;
+- versioned experiment configurations and manifests that identify the graph instances and prompts used in each run;
+- raw or provider-permitted response records together with normalized predictions and metric tables;
+- figures and tables covering accuracy, robustness, complexity effects, token usage, latency, and cost where available;
+- a final report discussing the research questions, limitations, and implications; and
+- presentation slides and a concise reproduction guide for future users of the artifact.
+
+## References
+
+1. Bahare Fatemi, Jonathan Halcrow, and Bryan Perozzi. “Talk Like a Graph: Encoding Graphs for Large Language Models.” *International Conference on Learning Representations*, 2024. https://arxiv.org/abs/2310.04560
+2. https://github.com/google-research/talk-like-a-graph
+3. Aric A. Hagberg, Daniel A. Schult, and Pieter J. Swart. “Exploring Network Structure, Dynamics, and Function Using NetworkX.” *Proceedings of the 7th Python in Science Conference*, 2008. https://networkx.org/documentation/stable/reference/index.html
