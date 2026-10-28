@@ -30,7 +30,9 @@ The exact model identifiers, endpoint settings, access date, and provider-specif
 
 RQ1 will use paired evaluation. A shared manifest will define the graph instances, task questions, prompts, canonical answers, and random seeds before any model requests are made. Every model will receive the same cases in the same experimental condition. The evaluation split will use held-out graph seeds and will not be used to tune prompts after results are inspected.
 
-RQ1 will reuse the existing GraphQA generation logic, task definitions, and any validated benchmark cases already available in the workspace. We will not generate a separate dataset for each model. If a complete serialized case set is not available, we will generate the cases once with fixed seeds, save the resulting manifest, and reuse that frozen manifest for every model. The existing small API trial is useful for checking connectivity and parsing, but it will be treated as a pilot rather than as the final RQ1 benchmark.
+The public repository provides the GraphQA generation logic, task definitions, and text encoders, but it does not include a complete pre-generated case archive. RQ1 will therefore reuse the implementation and generate the cases once with fixed seeds. The resulting manifest will be frozen and reused for every model; we will not generate a separate dataset for each model. The existing small API trial is useful for checking connectivity and parsing, but it will be treated as a pilot rather than as the final RQ1 benchmark.
+
+The relevant GraphQA source files are copied into `graphqa_src/` so that the RQ1 experiment can be run from this directory and tracked independently. The copied modules provide graph generation, task definitions, graph metrics, and text encoders; they do not contain a separate dataset.
 
 The core comparison will use zero-shot prompts with an explicit answer format. Binary tasks will request `Yes` or `No`, and node-degree questions will request an integer. Only the normalized final answer will be scored in the primary analysis. Explanations may be retained for error inspection but will not affect correctness.
 
@@ -47,8 +49,10 @@ The RQ1 directory will eventually contain:
 ```text
 rq1/
 ├── README.md
-├── config/
-├── prompts/
+├── graphqa_src/              # copied GraphQA generation and encoding modules
+├── config/                   # frozen experiment settings
+├── scripts/                  # manifest generation and evaluation scripts
+├── prompts/                  # frozen model prompts
 ├── manifests/
 ├── results/
 ├── logs/
@@ -57,6 +61,17 @@ rq1/
 
 The central data artifact will be a frozen case manifest containing graph identifiers, serialized graphs, tasks, questions, encodings, and ground-truth answers. All generated cases, prompts, model responses, normalized predictions, and summary tables should be traceable to this manifest and one versioned configuration. Credentials and provider secrets must remain outside the repository.
 
+## Initial validation plan
+
+We will validate the pipeline in progressively larger steps:
+
+1. Run `talk-like-a-graph/.venv311/bin/python rq1/scripts/smoke_test.py` (or an equivalent environment with NetworkX and NumPy) to generate one graph for each GraphQA topology family. This creates a small manifest with seven graphs, two encodings, and three tasks, and does not call an LLM API.
+2. Inspect graph metadata, encoded prompts, and ground-truth answers manually and with a lightweight parser check.
+3. Run a small API pilot on a limited subset of the smoke manifest to verify endpoint configuration, answer normalization, logging, and retry handling.
+4. Freeze the RQ1 configuration and manifest before any larger evaluation.
+
+No large-scale model run will be started during this initial validation stage.
+
 ## Status
 
-This directory currently contains the experiment specification only. The next step is to identify the reusable GraphQA cases, finalize the fixed encoding, generate or freeze the shared manifest if necessary, and validate the answer parser before running the model APIs.
+This directory currently contains the experiment specification only. The next step is to finalize the fixed encoding, generate the shared manifest from the GraphQA implementation, and validate the answer parser before running the model APIs.

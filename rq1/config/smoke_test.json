@@ -1,0 +1,8 @@
+{
+  "seed": 20261028,
+  "algorithms": ["er", "ba", "sfn", "sbm", "path", "star", "complete"],
+  "graphs_per_algorithm": 1,
+  "encodings": ["adjacency", "incident"],
+  "tasks": ["edge_existence", "node_degree", "cycle_detection"],
+  "output": "rq1/manifests/smoke_manifest.jsonl"
+}
