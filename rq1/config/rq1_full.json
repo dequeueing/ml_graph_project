@@ -13,7 +13,7 @@
   "encoding": "adjacency",
   "profiles": ["claude-glm", "claude-ds"],
   "max_concurrency": 1,
-  "max_tokens": 64,
+  "max_tokens": 256,
   "timeout_seconds": 120,
   "output": "rq1/manifests/rq1_full_adjacency.jsonl"
 }

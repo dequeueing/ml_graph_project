@@ -70,7 +70,7 @@ def main() -> None:
     )
     parser.add_argument("--index", type=int, default=0, help="zero-based case index")
     parser.add_argument("--profile", default="claude-glm", choices=RQ1_PROFILES)
-    parser.add_argument("--max-tokens", type=int, default=64)
+    parser.add_argument("--max-tokens", type=int, default=256)
     parser.add_argument("--timeout", type=float, default=120.0)
     parser.add_argument("--output", help="optional result path relative to the project root")
     args = parser.parse_args()
