@@ -1,0 +1,19 @@
+{
+  "seed": 20261028,
+  "graphs_per_algorithm": {
+    "er": 500,
+    "ba": 500,
+    "sfn": 500,
+    "sbm": 500,
+    "path": 100,
+    "complete": 100,
+    "star": 100
+  },
+  "tasks": ["edge_existence", "node_degree", "cycle_detection"],
+  "encoding": "adjacency",
+  "profiles": ["claude-glm", "claude-ds"],
+  "max_concurrency": 1,
+  "max_tokens": 64,
+  "timeout_seconds": 120,
+  "output": "rq1/manifests/rq1_full_adjacency.jsonl"
+}

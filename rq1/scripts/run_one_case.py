@@ -15,6 +15,8 @@ sys.path.insert(0, str(ROOT))
 
 import query_llms  # noqa: E402
 
+RQ1_PROFILES = ("claude-glm", "claude-ds")
+
 
 def build_prompt(case: dict) -> str:
     task = case["task"]
@@ -67,7 +69,7 @@ def main() -> None:
         help="JSONL manifest relative to the project root",
     )
     parser.add_argument("--index", type=int, default=0, help="zero-based case index")
-    parser.add_argument("--profile", default="codex", choices=sorted(query_llms.PROFILES))
+    parser.add_argument("--profile", default="claude-glm", choices=RQ1_PROFILES)
     parser.add_argument("--max-tokens", type=int, default=64)
     parser.add_argument("--timeout", type=float, default=120.0)
     parser.add_argument("--output", help="optional result path relative to the project root")

@@ -1,5 +1,6 @@
 {
   "seed": 20261028,
+  "profiles": ["claude-glm", "claude-ds"],
   "algorithms": ["er", "ba", "sfn", "sbm", "path", "star", "complete"],
   "graphs_per_algorithm": 1,
   "encodings": ["adjacency", "incident"],

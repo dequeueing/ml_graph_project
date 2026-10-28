@@ -21,10 +21,13 @@ To isolate model capability, the first RQ1 experiment will keep the graph encodi
 The initial model set is:
 
 - GLM-5.3 through the configured local API;
-- DeepSeek V4.1 Flash through the configured local API; and
-- GPT-6 Luna through the configured OpenAI-compatible API.
+- DeepSeek V4.1 Flash through the configured local API.
 
 The exact model identifiers, endpoint settings, access date, and provider-specific limitations will be recorded with every run.
+
+Codex/Luna was used only for the initial infrastructure check and is excluded from the formal RQ1 comparison.
+
+Using the paper's 2,300-graph distribution with the three RQ1 tasks would produce 6,900 cases per model, or 13,800 API calls for these two models. We will not start that full run until usage measurements and the sample-size decision are finalized.
 
 ## Experimental design
 
@@ -77,15 +80,44 @@ No large-scale model run will be started during this initial validation stage.
 After the smoke manifest has been generated, one complete model call can be run with:
 
 ```bash
-python3 rq1/scripts/run_one_case.py --profile codex --index 0
+python3 rq1/scripts/run_one_case.py --profile claude-glm --index 0
 ```
 
-The script reads one manifest record, builds the task prompt, calls the selected local API, extracts the answer, compares it with the stored ground truth, and writes the complete audit record to `results/one_case_<profile>_index_<index>.json`. The first validation used `codex` with the configured `gpt-6-luna` model on an edge-existence case. The API returned `Yes`, the parser produced `true`, and the stored ground truth was `true`, so the case was judged correct. This confirms the graph-to-prompt, API, parsing, and scoring path before any larger run.
+The script reads one manifest record, builds the task prompt, calls the selected local API, extracts the answer, compares it with the stored ground truth, and writes the complete audit record to `results/one_case_<profile>_index_<index>.json`. The initial infrastructure validation used Codex/Luna and is retained as a connectivity test only; it is not part of the formal two-model RQ1 results.
 
-A seven-case topology pilot was then run with the same profile, task, and adjacency encoding. It used one case from each of ER, BA, SFN, SBM, path, star, and complete graphs. All seven responses were valid and matched their ground-truth labels. The records are stored as `results/one_case_codex_index_<index>.json`; this pilot is still an infrastructure check, not a benchmark result.
+A seven-case topology pilot was then run with Codex/Luna as an infrastructure check. It used one case from each of ER, BA, SFN, SBM, path, star, and complete graphs. All seven responses were valid and matched their ground-truth labels. The records are stored as `results/one_case_codex_index_<index>.json`; this pilot is not part of the formal two-model RQ1 results.
 
 The runner now records API usage metadata when the gateway returns it. A measurement call for case index 0 used 804 prompt tokens and 5 completion tokens, for 809 total tokens. The gateway did not return a monetary price, and the local configuration does not contain a price table, so an exact dollar cost cannot currently be reported. The remaining pilot records were created before usage logging was added. Their prompt lengths imply roughly 3,000 input tokens and 35 output tokens for all seven calls combined, but this is only a planning estimate. Future pilot and benchmark calls must record usage before we scale up.
 
 ## Status
 
-The smoke and one-case validation stages are complete. The next step is to freeze the small pilot configuration and decide the formal RQ1 sample size before running additional model calls.
+## Formal RQ1 run
+
+The formal RQ1 configuration is frozen in `config/rq1_full.json`. It reuses the
+paper-scale distribution of 2,300 generated graphs and creates three cases per
+graph (edge existence, node degree, and cycle detection), for 6,900 cases per
+model. The first RQ1 comparison uses only GLM-5.3 and DeepSeek V4.1 Flash with
+the fixed adjacency encoding. Codex/Luna records remain infrastructure pilots
+and are excluded from the formal comparison.
+
+Generate or regenerate the frozen manifest with the repository's existing
+NetworkX environment:
+
+```bash
+talk-like-a-graph/.venv311/bin/python rq1/scripts/generate_manifest.py
+```
+
+The sequential runner sends at most one request at a time, processes the two
+profiles in configuration order, flushes every result immediately, and resumes
+from any existing output file by `case_id`:
+
+```bash
+python3 rq1/scripts/run_rq1.py --config rq1/config/rq1_full.json
+```
+
+For a bounded check, use `--limit N`; to run one model only, use
+`--profile claude-glm` or `--profile claude-ds`. Each model's results are
+written to `results/rq1_full_<profile>.jsonl`, including normalized answers,
+correctness, latency, retry count, and API usage metadata when returned by the
+gateway. The full run is intentionally sequential and restartable; no second
+request is issued until the previous request has been logged.

@@ -19,3 +19,7 @@ __pycache__/
 graphqa/
 outputs/
 generated_graphs/
+
+# Full RQ1 API outputs (large, resumable local artifacts).
+rq1/results/rq1_full_*.jsonl
+rq1/logs/
