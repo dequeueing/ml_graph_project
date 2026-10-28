@@ -29,7 +29,9 @@ def load_completed(path: Path) -> set[str]:
         except json.JSONDecodeError:
             continue
         case_id = record.get("case_id")
-        if case_id:
+        # A request error is retryable on a later invocation.  Only a record
+        # with a successful API response is considered complete.
+        if case_id and record.get("status") == "ok":
             completed.add(case_id)
     return completed
 
@@ -71,6 +73,7 @@ def run_profile(profile: str, cases: list[dict], output: Path, max_tokens: int, 
                             "attempts": attempt + 1,
                         }
                     )
+                    record.pop("error", None)
                     break
                 except Exception as exc:  # Keep a failed case auditable and continue.
                     record.update(
