@@ -12,7 +12,7 @@
 \setlength{\parskip}{0.65em}
 \setcounter{tocdepth}{2}
 \title{Revisiting Graph Reasoning in Modern Large Language Models\\[0.4em]\large Reproduction and Extension of GraphQA}
-\author{COMP5222 Group Project}
+\author{Taojie Wang (twangdo@connect.ust.hk)\\[0.35em] Chiyu Hao (chaoae@connect.ust.hk)\\[0.35em] Zhengdong Huang (zhuanggm@connect.ust.hk)}
 \date{}
 \begin{document}
 \maketitle
@@ -36,7 +36,7 @@ The original experiments were conducted with PaLM 62B and PaLM 2 variants. Moder
 
 There is therefore a need for a controlled re-evaluation that preserves the core GraphQA setting while extending it in directions relevant to current LLM use. A direct comparison with historical PaLM numbers must be interpreted carefully because the models and service conditions are different. Nevertheless, a matched modern evaluation can test whether the original qualitative conclusions remain visible, identify which tasks and graph structures are still difficult, and provide practical evidence about the cost of different encodings.
 
-The project will primarily reproduce a controlled subset of the GraphQA benchmark and extend it with a set of systematic experiments. We will evaluate modern LLMs on representative graph tasks and encodings, examine how performance changes with graph size, density, topology, and representation changes, and report accuracy together with token usage, latency, request reliability, and available API cost information. Graph-generation settings, prompts, model configurations, and processed results will be documented so that the experiments can be repeated under the same API conditions. The intended outcome is an empirical comparison and a reproducible experiment record rather than a new model or graph-reasoning method.
+The project will  reproduce a controlled subset of the GraphQA benchmark and extend it with a set of systematic experiments. We will evaluate modern LLMs on representative graph tasks and encodings, examine how performance changes with graph size, density, topology, and representation changes, and report accuracy together with token usage, latency, request reliability, and available API cost information. Graph-generation settings, prompts, model configurations, and processed results will be documented so that the experiments can be repeated under the same API conditions. The intended outcome is an empirical comparison and a reproducible experiment record rather than a new model or graph-reasoning method.
 
 \section{2. Background and Related Work}
 
