@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.venv/
+.venv*/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.git-local/
+
+# Local credentials and machine-specific configuration.
+.env
+.env.*
+*.env
+.codex/
+.aws/
+.agents/
+
+# Generated graph datasets and local run outputs.
+graphqa/
+outputs/
+generated_graphs/
