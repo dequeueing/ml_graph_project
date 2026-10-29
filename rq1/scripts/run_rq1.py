@@ -51,6 +51,7 @@ def run_profile(profile: str, cases: list[dict], output: Path, max_tokens: int, 
                 "timestamp_utc": datetime.now(timezone.utc).isoformat(),
                 "case_id": case["case_id"],
                 "profile": profile,
+                "request_max_tokens": max_tokens,
                 "case": case,
                 "prompt_sha256": prompt_hash,
             }
