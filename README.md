@@ -2,7 +2,7 @@
 
 HKUST COMP5222 course project reproducing the graph-description ordering study of Ge et al. (2025) with DeepSeek V4.1 Flash, GLM-5.3, and GPT-6 Luna.
 
-**[Read the report (PDF)](COMP5222_GraphDO_Report.pdf)** · **[Markdown report](COMP5222_GraphDO_Report.md)** · **[Reproduce the analysis](REPRODUCTION.md)** · **[Scoring acceptance record](analysis/SCORING_RELEASE.md)**
+**[Read the report (PDF)](COMP5222_GraphDO_Report.pdf)** · **[Presentation (PPTX)](COMP5222_GraphDO_Group8.pptx)** · **[Markdown report](COMP5222_GraphDO_Report.md)** · **[Reproduce the analysis](REPRODUCTION.md)** · **[Scoring acceptance record](analysis/SCORING_RELEASE.md)**
 
 We compare random edge order with BFS, DFS, PageRank, and Personalized PageRank across five traditional graph tasks and node classification. The traditional tasks use five prompt styles. Node classification uses zero-shot prompts on Cora, CiteSeer, and PubMed with two sampling methods.
 
@@ -27,6 +27,7 @@ These means weight the 25 task and prompt-style combinations equally. Binary gra
 | Path | Contents |
 | --- | --- |
 | `COMP5222_GraphDO_Report.pdf` | PDF report supplied on 2026-11-23 |
+| `COMP5222_GraphDO_Group8.pptx` | Group 8 presentation |
 | `COMP5222_GraphDO_Report.md` | Markdown report with GitHub-compatible figure links |
 | `experiments/half-scale/` | Main experiment configuration, runner, benchmark manifests, and GLM recovery scripts |
 | `experiments/GraphDO/` | Upstream submodule pinned to `4ba8f925c76574e2fca8d4f32f753b57a341b44f` |
