@@ -1,0 +1,179 @@
+{
+  "version": "scoring-v1-20261122",
+  "accepted_utc": "2026-11-22T09:49:46.043080+00:00",
+  "status": "accepted_for_current_saved_corpus",
+  "prompt_alignment": {
+    "traditional_prompts": 17500,
+    "node_prompts": 2250,
+    "node_graph_questions": 150
+  },
+  "regression_tests": 28,
+  "traditional_main_scores_reproduced": 47850,
+  "traditional_archive_scores_reproduced": 52500,
+  "node_scores_reproduced": 4500,
+  "independent_graph_question_checks": 700,
+  "paired_tests_reproduced": 300,
+  "figure_pixel_matches": 4,
+  "ambiguous_responses": 7,
+  "ambiguity_assignments": 128,
+  "scope": "Current saved corpus, approved exclusions, scoring policy, and explicit review ledger.",
+  "limit": "No universal semantic correctness guarantee for arbitrary future answers.",
+  "files_sha256": {
+    "COMP5222_GraphDO_Report.md": "8cc523625f9e3edeb04d4aecbf8075a95545a51905015a15b7956b80346eb7c2",
+    "analysis/score_answers.py": "d4f090643462ae18a0631f9f89cb5db399365b57d57302381090a989f8f54df7",
+    "analysis/audit_node_scores.py": "102ea6e0875abbd08d10e5a62294fa0efb99f593c2fcf702817f80edeced6cfe",
+    "analysis/review_scores.py": "ad2af2374d3c1033d2e2cc8fb38456466fd02daa06f91bd76c2d3229230f80f0",
+    "analysis/audit_scores.py": "be293c2bef2df5d10fb421a2348c92f2a151809db773b3f82d08e7e9c5d98328",
+    "analysis/analyze_rq1.py": "6817078d5114115feaf1a2647570220a78049610da10d32c2b548e1a14537fb2",
+    "analysis/analyze_rq2.py": "e3ee3820332b077ac2b461867bfa9ba92378a5bc12e239dec33a4be435adbf77",
+    "analysis/report_metrics.py": "d5d148959156ff012d7b1cf4e907f7b0ecbb54b529afd934d71cf85840dbf655",
+    "analysis/check_ambiguity.py": "43ed84549e9ea86fc5467ae13c20a11889fedb5f59b20ead4c5f0ad89bb5885e",
+    "analysis/test_score_answers.py": "f8c9a5535a74e963f5c091dbf538c404bc97ec4e7b52051f83dfa64a05699604",
+    "analysis/document_audit.py": "27817ad4bb07097c72c938556f8e03058f9718d6d96e833f71a3a02bd6fef6c4",
+    "analysis/accept_scoring_release.py": "4641938f55507b1c6ca4320b855b994d7c70b12394cc04c1d1cd8b34ba798967",
+    "analysis/scoring_audit_inputs.json.gz": "794a17b5715a9ba6afb734b1626c628b987a928bb34837857ed9499b0b7ee005",
+    "analysis/verification_prompt_inputs.json.gz": "86d54a6378a9bb05cfc47ccb419888a905fe9e60d6efb68f0f09f5bfde29c4eb",
+    "analysis/manual_answer_review.json": "47ff44c3fc654bb9a85feb3e33331353bf5dd5286febe8cbb4b903553eca6782",
+    "analysis/audited_final_scores.json": "784085e0897ff8f6d5bf996d63ad40dce792c2c8f8b94d2f13bdb89a12aaa96a",
+    "analysis/false_negative_review.json": "6e818c502a7eb6f1aa9a0bd72791f4dbd92a309ddb1551bf08f962a8de1d6ff1",
+    "analysis/node_score_audit.json": "2d65b1e15b4a780a736e1b71ebb211674c10937b93b90a79172a55f848fadbc9",
+    "analysis/rq1_insights.json": "00acd94bd13c37d99d114565a120be361304d1f76414f08456addb97e4daf728",
+    "analysis/rq2_insights.json": "bc9c17d7adca30f52b6be132e4caf335b84010273e5319a58af9c85c065fffc1",
+    "analysis/report_metrics.json": "040d569208811998a76038e9b0441f89dd9954eb9ca8fcc3f5eb23111baa2d87",
+    "analysis/ambiguity_sensitivity.json": "19ac63ce698059065d360358eda4907cf822afb37c602df299eebc08574d6148",
+    "analysis/rq2_final_scores.json.gz": "937fbd96a7d0259c8e076f41c4f588945098f6c19724f6faa073db367d496a4e",
+    "analysis/SCORING_AUDIT.md": "89d36386bfd52f376886f9b99ef0cf273bb879a08e09b58330945afae604ee71",
+    "analysis/before-false-negative-review/audited_final_scores.json": "0b7451d1fca14784486ca6a3cb9f108f57df2bbd81167a1432b757778c8a2094",
+    "figures/figure_style.py": "8abc04a6ebc2f707aef95b6c677eb936e1462355791516ebb3139dcdfad6dbc9",
+    "figures/plot_final_accuracy.py": "254d65f9c2b6071c20817ac9db6d3720a4889f49d68e83d40308ab647042ecbf",
+    "figures/plot_order_consistency.py": "39b74dedf426217c43e76cd7919bf1f86cb95c9822f0d99614f9dcaace619991",
+    "figures/plot_shortest_path_ppr.py": "6c0170e4e1d8cca9f8fead1e23044dfb2ac4d82da57321bc0a0ece6586dc9175",
+    "figures/plot_node_ppr.py": "364f6a72b6230dac1362dfbbc46fe2f563252b1755ed808b06682c41475341af",
+    "figures/graphdo-edge-order-example.png": "0bf784d453f3e265a016c44ef758ecc935caeb8c1f4fddd1325e9057d479ff07",
+    "figures/graphdo-edge-order-example.svg": "3c66c9d6be151434280716817c9489346451861275f4cdf57a95dbdc07ab6092",
+    "figures/graphdo-reviewed-accuracy.png": "902477a1d9f8cd4fb5bceed5b6489fb1ff2f6930370bc4382263f077c319429b",
+    "figures/graphdo-reviewed-accuracy.svg": "61b7bec8b4fea418ebb77efc6f9fe2b28fc33142c31280c368328510f9fde5cf",
+    "figures/graphdo-reviewed-consistency.png": "1e05b71d7d0f41b32488e479f4572c386768cc4698a94f04c26f8a5cdf34a692",
+    "figures/graphdo-reviewed-consistency.svg": "d4024bfc98e66175d911aaccf87d3178008deb03a8836549a63f817b9da5d91e",
+    "figures/graphdo-reviewed-shortest-path-ppr.png": "c170c7c7c415fa7935f467d25c3c2e1d3190171e1ddc7897f544e0620023bd32",
+    "figures/graphdo-reviewed-shortest-path-ppr.svg": "94522e321ddd23534ba65b8e5026ab01a7bb5f2e07c05d886e41677124b92fb7",
+    "figures/graphdo-reviewed-ppr-breakdown.png": "2f984130e3311ad6326eb18c094133a52d74b0c959bc2f0d3b58771fcdbf9a3d",
+    "figures/graphdo-reviewed-ppr-breakdown.svg": "643e62b6cb438e03f0735c045d612837d558b7b3f3dcea4bbef7f523b0162dd5"
+  },
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "analysis",
+        "-p",
+        "test_score_answers.py"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "............................\n----------------------------------------------------------------------\nRan 28 tests in 0.003s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/audit_node_scores.py"
+      ],
+      "returncode": 0,
+      "stdout": "deepseek-v4.1-flash {'n': 2250, 'previous': 1549, 'correct': 1547, 'unextracted': 0, 'abstention': 0, 'tool_call': 381}\ngpt-6-luna {'n': 2250, 'previous': 1201, 'correct': 1151, 'unextracted': 0, 'abstention': 728, 'tool_call': 0}\nChanges 86 unextracted 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/review_scores.py"
+      ],
+      "returncode": 0,
+      "stdout": "deepseek-v4.1-flash {'n': 15950, 'previous': 15615, 'score': 15637, 'gained': 23, 'lost': 1, 'unextracted': 0, 'ambiguous': 1, 'tool_only': 281}\ngpt-6-luna {'n': 15950, 'previous': 13918, 'score': 14179, 'gained': 261, 'lost': 0, 'unextracted': 0, 'ambiguous': 1, 'tool_only': 0}\nglm-5.3 {'n': 15950, 'previous': 15184, 'score': 15245, 'gained': 61, 'lost': 0, 'unextracted': 0, 'ambiguous': 5, 'tool_only': 0}\nIndependent graph ground-truth checks 700 changes 346 unextracted 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/analyze_rq1.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"comparisons\": 300,\n  \"higher_equal_lower\": {\n    \"equal\": 107,\n    \"higher\": 122,\n    \"lower\": 71\n  },\n  \"holm_significant\": 0,\n  \"minimum_adjusted_test\": {\n    \"model\": \"gpt-6-luna\",\n    \"task\": \"hamilton\",\n    \"prompt\": \"zero_shot\",\n    \"order\": \"bfs\",\n    \"n\": 78,\n    \"baseline_correct\": 64,\n    \"correct\": 45,\n    \"gain\": 5,\n    \"loss\": 24,\n    \"delta_pp\": -24.358974358974358,\n    \"p\": 0.0005461126565933228,\n    \"holm_p\": 0.16383379697799683\n  }\n}\ndeepseek-v4.1-flash {'equal': 48, 'higher': 35, 'lower': 17} {'bfs': 0.336996336996337, 'dfs': -0.084981684981685, 'pagerank': 0.7252747252747253, 'ppr': 0.3494505494505495}\ngpt-6-luna {'lower': 25, 'equal': 16, 'higher': 59} {'bfs': 0.07472527472527479, 'dfs': 1.1128205128205129, 'pagerank': 0.6388278388278389, 'ppr': 1.227106227106227}\nglm-5.3 {'equal': 43, 'lower': 29, 'higher': 28} {'bfs': -0.5091575091575092, 'dfs': 0.057142857142857134, 'pagerank': 0.13040293040293044, 'ppr': -0.263003663003663}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/analyze_rq2.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"binary_tasks_least_variable_settings\": 14,\n  \"model_prompt_settings\": 15,\n  \"shortest_path_highest_settings\": 4,\n  \"zero_shot_highest\": {\n    \"deepseek-v4.1-flash\": [\n      \"hamilton\"\n    ],\n    \"glm-5.3\": [\n      \"topology\"\n    ],\n    \"gpt-6-luna\": [\n      \"hamilton\"\n    ]\n  },\n  \"zero_shot_cot_highest\": {\n    \"deepseek-v4.1-flash\": [\n      \"hamilton\"\n    ],\n    \"glm-5.3\": [\n      \"topology\"\n    ],\n    \"gpt-6-luna\": [\n      \"shortest_path\"\n    ]\n  }\n}\nzero_shot -> zero_shot_cot {'lower': 5, 'equal': 5, 'higher': 5}\nfew_shot -> cot {'lower': 8, 'equal': 2, 'higher': 5}\nzero_shot_cot -> cot {'lower': 9, 'equal': 3, 'higher': 3}\ncot -> cot_bag {'lower': 3, 'equal': 3, 'higher': 9}\ndeepseek-v4.1-flash {'connectivity': 0.0, 'cycle': 0.02, 'shortest_path': 2.25, 'hamilton': 4.44, 'topology': 0.69}\nglm-5.3 {'connectivity': 0.02, 'cycle': 0.14, 'shortest_path': 2.07, 'hamilton': 2.42, 'topology': 3.82}\ngpt-6-luna {'connectivity': 0.52, 'cycle': 0.33, 'shortest_path': 14.69, 'hamilton': 45.79, 'topology': 14.11}\nCross-checked all 300 RQ1 pairs against the final per-question scores.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/report_metrics.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"deepseek-v4.1-flash\": {\n    \"mean_accuracy\": 97.27120879120879,\n    \"order_means\": {\n      \"random\": 97.0058608058608,\n      \"bfs\": 97.34285714285714,\n      \"dfs\": 96.92087912087912,\n      \"pagerank\": 97.73113553113554,\n      \"ppr\": 97.35531135531136\n    },\n    \"tasks\": {\n      \"shortest_path\": {\n        \"random\": 96.28571428571429,\n        \"bfs\": 98.14285714285714,\n        \"dfs\": 97.14285714285714,\n        \"pagerank\": 98.28571428571429,\n        \"ppr\": 98.85714285714286\n      },\n      \"cycle\": {\n        \"random\": 99.85714285714286,\n        \"bfs\": 99.85714285714286,\n        \"dfs\": 100.0,\n        \"pagerank\": 100.0,\n        \"ppr\": 100.0\n      },\n      \"topology\": {\n        \"random\": 99.14285714285714,\n        \"bfs\": 98.71428571428571,\n        \"dfs\": 99.0,\n        \"pagerank\": 99.85714285714286,\n        \"ppr\": 99.71428571428571\n      },\n      \"connectivity\": {\n        \"random\": 100.0,\n        \"bfs\": 100.0,\n        \"dfs\": 100.0,\n        \"pagerank\": 100.0,\n        \"ppr\": 100.0\n      },\n      \"hamilton\": {\n        \"random\": 89.74358974358974,\n        \"bfs\": 90.0,\n        \"dfs\": 88.46153846153845,\n        \"pagerank\": 90.51282051282051,\n        \"ppr\": 88.2051282051282\n      }\n    },\n    \"identical_hamilton_pairs\": 390,\n    \"identical_prompt_disagreements\": 47,\n    \"ppr_shortest\": {\n      \"zero_shot\": 6.428571428571429,\n      \"zero_shot_cot\": 1.4285714285714286,\n      \"few_shot\": 2.857142857142857,\n      \"cot\": -0.7142857142857143,\n      \"cot_bag\": 2.857142857142857\n    },\n    \"node\": {\n      \"random\": 67.77777777777777,\n      \"deltas\": {\n        \"bfs\": -0.6666666666666666,\n        \"dfs\": 0.6666666666666666,\n        \"pagerank\": 2.444444444444444,\n        \"ppr\": 2.4444444444444446\n      },\n      \"outcomes\": {\n        \"higher\": 14,\n        \"equal\": 4,\n        \"lower\": 6\n      }\n    }\n  },\n  \"gpt-6-luna\": {\n    \"mean_accuracy\": 87.16380952380952,\n    \"order_means\": {\n      \"random\": 86.55311355311355,\n      \"bfs\": 86.62783882783883,\n      \"dfs\": 87.66593406593407,\n      \"pagerank\": 87.1919413919414,\n      \"ppr\": 87.78021978021978\n    },\n    \"tasks\": {\n      \"shortest_path\": {\n        \"random\": 79.57142857142857,\n        \"bfs\": 80.71428571428571,\n        \"dfs\": 79.42857142857143,\n        \"pagerank\": 83.42857142857143,\n        \"ppr\": 88.14285714285714\n      },\n      \"cycle\": {\n        \"random\": 98.28571428571429,\n        \"bfs\": 99.42857142857143,\n        \"dfs\": 99.0,\n        \"pagerank\": 98.71428571428571,\n        \"ppr\": 99.14285714285714\n      },\n      \"topology\": {\n        \"random\": 83.71428571428572,\n        \"bfs\": 82.14285714285714,\n        \"dfs\": 85.42857142857143,\n        \"pagerank\": 90.0,\n        \"ppr\": 88.71428571428572\n      },\n      \"connectivity\": {\n        \"random\": 99.14285714285714,\n        \"bfs\": 99.57142857142857,\n        \"dfs\": 99.85714285714286,\n        \"pagerank\": 99.71428571428572,\n        \"ppr\": 98.28571428571429\n      },\n      \"hamilton\": {\n        \"random\": 72.05128205128206,\n        \"bfs\": 71.28205128205128,\n        \"dfs\": 74.61538461538461,\n        \"pagerank\": 64.1025641025641,\n        \"ppr\": 64.61538461538461\n      }\n    },\n    \"identical_hamilton_pairs\": 390,\n    \"identical_prompt_disagreements\": 92,\n    \"ppr_shortest\": {\n      \"zero_shot\": 7.857142857142857,\n      \"zero_shot_cot\": 10.714285714285714,\n      \"few_shot\": 12.857142857142858,\n      \"cot\": 2.857142857142857,\n      \"cot_bag\": 8.571428571428571\n    },\n    \"node\": {\n      \"random\": 56.888888888888886,\n      \"deltas\": {\n        \"bfs\": -2.888888888888889,\n        \"dfs\": -3.1111111111111107,\n        \"pagerank\": -11.11111111111111,\n        \"ppr\": -11.555555555555555\n      },\n      \"outcomes\": {\n        \"higher\": 6,\n        \"equal\": 1,\n        \"lower\": 17\n      }\n    }\n  },\n  \"glm-5.3\": {\n    \"mean_accuracy\": 95.77611721611721,\n    \"order_means\": {\n      \"random\": 95.89304029304029,\n      \"bfs\": 95.38388278388278,\n      \"dfs\": 95.95018315018315,\n      \"pagerank\": 96.02344322344322,\n      \"ppr\": 95.63003663003663\n    },\n    \"tasks\": {\n      \"shortest_path\": {\n        \"random\": 96.85714285714286,\n        \"bfs\": 94.57142857142857,\n        \"dfs\": 95.42857142857143,\n        \"pagerank\": 95.14285714285714,\n        \"ppr\": 94.28571428571428\n      },\n      \"cycle\": {\n        \"random\": 99.85714285714286,\n        \"bfs\": 99.85714285714286,\n        \"dfs\": 99.57142857142857,\n        \"pagerank\": 99.71428571428572,\n        \"ppr\": 99.71428571428572\n      },\n      \"topology\": {\n        \"random\": 85.57142857142857,\n        \"bfs\": 84.28571428571428,\n        \"dfs\": 87.57142857142857,\n        \"pagerank\": 86.28571428571429,\n        \"ppr\": 86.85714285714286\n      },\n      \"connectivity\": {\n        \"random\": 100.0,\n        \"bfs\": 100.0,\n        \"dfs\": 100.0,\n        \"pagerank\": 100.0,\n        \"ppr\": 99.85714285714286\n      },\n      \"hamilton\": {\n        \"random\": 97.17948717948718,\n        \"bfs\": 98.2051282051282,\n        \"dfs\": 97.17948717948718,\n        \"pagerank\": 98.97435897435898,\n        \"ppr\": 97.43589743589743\n      }\n    },\n    \"identical_hamilton_pairs\": 390,\n    \"identical_prompt_disagreements\": 14,\n    \"ppr_shortest\": {\n      \"zero_shot\": -1.4285714285714286,\n      \"zero_shot_cot\": -0.7142857142857143,\n      \"few_shot\": -6.428571428571429,\n      \"cot\": 0.0,\n      \"cot_bag\": -4.285714285714286\n    }\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/check_ambiguity.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"source_sha256\": \"15ee159c4bc0f22e1cf2b50ac10a14cef1620af351af0d68471cfe38e46b5d61\",\n  \"review_sha256\": \"6e818c502a7eb6f1aa9a0bd72791f4dbd92a309ddb1551bf08f962a8de1d6ff1\",\n  \"ambiguous_cases\": [\n    [\n      \"deepseek-v4.1-flash\",\n      \"topology/5/random/cot_bag/r1\"\n    ],\n    [\n      \"gpt-6-luna\",\n      \"shortest_path/59/pagerank/few_shot/r1\"\n    ],\n    [\n      \"glm-5.3\",\n      \"shortest_path/131/ppr/few_shot/r1\"\n    ],\n    [\n      \"glm-5.3\",\n      \"hamilton/71/dfs/few_shot/r1\"\n    ],\n    [\n      \"glm-5.3\",\n      \"topology/60/random/zero_shot/r1\"\n    ],\n    [\n      \"glm-5.3\",\n      \"topology/87/dfs/cot/r1\"\n    ],\n    [\n      \"glm-5.3\",\n      \"topology/114/bfs/zero_shot_cot/r1\"\n    ]\n  ],\n  \"assignments_tested\": 128,\n  \"significant_comparisons_min\": 0,\n  \"significant_comparisons_max\": 0,\n  \"minimum_holm_p_range\": [\n    0.16383379697799683,\n    0.16383379697799683\n  ],\n  \"maximum_change_in_mean_ordering_effect_pp\": 0.07985347985347985,\n  \"mean_ordering_effect_ranges\": {\n    \"deepseek-v4.1-flash/bfs\": [\n      0.30842490842490844,\n      0.33699633699633696\n    ],\n    \"deepseek-v4.1-flash/dfs\": [\n      -0.11355311355311357,\n      -0.084981684981685\n    ],\n    \"deepseek-v4.1-flash/pagerank\": [\n      0.6967032967032968,\n      0.7252747252747254\n    ],\n    \"deepseek-v4.1-flash/ppr\": [\n      0.3208791208791209,\n      0.3494505494505495\n    ],\n    \"gpt-6-luna/bfs\": [\n      0.07472527472527479,\n      0.07472527472527479\n    ],\n    \"gpt-6-luna/dfs\": [\n      1.1128205128205129,\n      1.1128205128205129\n    ],\n    \"gpt-6-luna/pagerank\": [\n      0.6388278388278389,\n      0.6673992673992675\n    ],\n    \"gpt-6-luna/ppr\": [\n      1.227106227106227,\n      1.227106227106227\n    ],\n    \"glm-5.3/bfs\": [\n      -0.5377289377289377,\n      -0.4805860805860806\n    ],\n    \"glm-5.3/dfs\": [\n      0.028571428571428564,\n      0.13699633699633698\n    ],\n    \"glm-5.3/pagerank\": [\n      0.10183150183150186,\n      0.13040293040293044\n    ],\n    \"glm-5.3/ppr\": [\n      -0.2915750915750916,\n      -0.23443223443223443\n    ]\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "analysis/document_audit.py"
+      ],
+      "returncode": 0,
+      "stdout": "Verified Tables 7\u20139 and B1, macro means, exclusions, source hashes, figure paths, and punctuation.\nWrote SCORING_AUDIT.md and refreshed rq2_final_scores.json.gz.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "figures/plot_final_accuracy.py"
+      ],
+      "returncode": 0,
+      "stdout": "Original mean accuracies: {'Random': 50.285199999999996, 'BFS': 62.3424, 'DFS': 62.843199999999996, 'PR': 56.986399999999996, 'PPR': 57.18600000000001}\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-accuracy.png\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-accuracy.svg\n",
+      "stderr": "Matplotlib is building the font cache; this may take a moment.\n"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "figures/plot_order_consistency.py"
+      ],
+      "returncode": 0,
+      "stdout": "/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-consistency.png\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-consistency.svg\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "figures/plot_shortest_path_ppr.py"
+      ],
+      "returncode": 0,
+      "stdout": "DeepSeek V4.1 Flash {'zero_shot': 6.4286, 'zero_shot_cot': 1.4286, 'few_shot': 2.8571, 'cot': -0.7143, 'cot_bag': 2.8571}\nGLM-5.3 {'zero_shot': -1.4286, 'zero_shot_cot': -0.7143, 'few_shot': -6.4286, 'cot': 0.0, 'cot_bag': -4.2857}\nGPT-6 Luna {'zero_shot': 7.8571, 'zero_shot_cot': 10.7143, 'few_shot': 12.8571, 'cot': 2.8571, 'cot_bag': 8.5714}\nPositive prompt counts: [4, 0, 5]\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-shortest-path-ppr.png\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-shortest-path-ppr.svg\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "figures/plot_node_ppr.py"
+      ],
+      "returncode": 0,
+      "stdout": "DeepSeek V4.1 Flash {'Traditional mean': 0.3495, 'Connectivity': 0.0, 'Cycle detection': 0.1429, 'Weighted shortest path': 2.5714, 'Hamiltonian path': -1.5385, 'Topological sorting': 0.5714, 'Node classification mean': 2.4444, 'Cora': 3.3333, 'CiteSeer': -1.3333, 'PubMed': 5.3333}\nGPT-6 Luna {'Traditional mean': 1.2271, 'Connectivity': -0.8571, 'Cycle detection': 0.8571, 'Weighted shortest path': 8.5714, 'Hamiltonian path': -7.4359, 'Topological sorting': 5.0, 'Node classification mean': -11.5556, 'Cora': -16.6667, 'CiteSeer': 2.6667, 'PubMed': -20.6667}\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-ppr-breakdown.png\n/private/var/folders/m5/tzfmtwvd5rx8q4zjs8fjbr400000gn/T/graphdo-acceptance-3jjta112/figures/graphdo-reviewed-ppr-breakdown.svg\n",
+      "stderr": ""
+    }
+  ]
+}

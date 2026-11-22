@@ -1,0 +1,9 @@
+{
+  "model": "glm-5.3",
+  "manifest_sha256": "d4dc4fbe2b111c1cacc049f0a6c59ed9e40b70e1f202e90f41dabae73c30acde",
+  "selected": 5991,
+  "previously_blank": 3660,
+  "output_limit": 4096,
+  "fallback_limit": 8192,
+  "max_concurrency": 128
+}

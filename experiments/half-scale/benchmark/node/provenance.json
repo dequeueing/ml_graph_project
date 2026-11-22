@@ -1,0 +1,56 @@
+{
+  "tasks": [
+    "node_classification"
+  ],
+  "datasets": [
+    "cora",
+    "citeseer",
+    "pubmed"
+  ],
+  "samplings": [
+    "ego",
+    "forest_fire"
+  ],
+  "graphs_per_group": 25,
+  "prompt_styles": [
+    "zero_shot"
+  ],
+  "repeats": 3,
+  "group": "node",
+  "orders": [
+    "random",
+    "bfs",
+    "dfs",
+    "pagerank",
+    "ppr"
+  ],
+  "models": [
+    "deepseek-v4.1-flash",
+    "glm-5.3",
+    "gpt-6-luna"
+  ],
+  "seed": 42,
+  "upstream_commit": "4ba8f925c76574e2fca8d4f32f753b57a341b44f",
+  "graph_groups": {
+    "cora/ego": 25,
+    "cora/forest_fire": 25,
+    "citeseer/ego": 25,
+    "citeseer/forest_fire": 25,
+    "pubmed/ego": 25,
+    "pubmed/forest_fire": 25
+  },
+  "grader_checks": {
+    "reference_accepted": 150
+  },
+  "prompt_count": 2250,
+  "planned_requests": 6750,
+  "packages": {
+    "networkx": "3.6.1",
+    "numpy": "2.5.5",
+    "scipy": "1.18.1",
+    "torch": "2.15.0+cpu",
+    "torch-geometric": "2.8.1",
+    "littleballoffur": "2.3.1"
+  },
+  "manifest_sha256": "ddab955db32af9b8160c903f9e7db29d1205fbe6ad4cad2bdb24f7ede5c336e6"
+}

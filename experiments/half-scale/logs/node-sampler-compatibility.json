@@ -1,0 +1,6 @@
+{
+  "package": "littleballoffur 2.3.1",
+  "change": "random.sample(unvisited_neighbors, count) -> random.sample(tuple(unvisited_neighbors), count)",
+  "reason": "Python >= 3.11 requires a sequence in random.sample; keep the same uniform sampling rule",
+  "patched_source_sha256": "dec1ff09c427789180219f210d7471b8335c41352e32fa4a9ed21ff070584031"
+}
