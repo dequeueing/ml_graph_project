@@ -1,101 +1,87 @@
-# Talk Like a Graph：本地复现说明
+# Reproduction guide
 
-`talk-like-a-graph/` 是论文 *Talk Like a Graph: Encoding Graphs for Large
-Language Models* 的开源代码。当前仓库可以直接复现图生成、图文本编码和若干图任务的答案生成；论文中使用 PaLM 62B/PaLM 2 的完整准确率表不能在本地原样重跑，因为模型服务和部分数据生成脚本并未随仓库提供。
+## Verify the saved artifacts
 
-## 可以复现的内容
+From the repository root, run:
 
-1. 生成不同结构的图：Erdős–Rényi（`er`）、Barabási–Albert（`ba`）、随机块模型（`sbm`）、scale-free network（`sfn`）、完全图（`complete`）、星形图（`star`）和路径图（`path`）。
-2. 将同一张图编码成不同文本形式：`adjacency`、`incident`、`friendship`、`coauthorship`、`social_network`、`expert` 等。
-3. 生成基础图任务及其确定答案：边存在性、节点度数、节点/边计数、连通节点、不连通节点、环检测、可达性、最短路径、三角形计数和最大流等。
-4. 将生成的图问题文本交给本地 LLM API，再统计回答准确率。项目根目录的 `query_llms.py` 提供了 GLM、DeepSeek 和 Codex-compatible 接口的统一调用方式。
-
-## 安装轻量依赖
-
-仓库源码使用 Python 3.10+ 的类型标注。图生成和编码部分只需要 Python、NetworkX、NumPy 和 `absl-py`：
-
-```bash
-cd talk-like-a-graph
-python3.11 -m venv .venv
-.venv/bin/pip install networkx numpy absl-py
+```sh
+python3 tools/verify_artifacts.py
 ```
 
-完整的任务文件生成器还会导入 TensorFlow、TensorFlow-GNN 和 SeqIO；如果只做下面的图生成、编码和任务答案示例，不需要安装这几个大型依赖。
+This verifies the 39 included files from the frozen scoring manifest, the separately hashed redacted input, the three benchmark-manifest checksums and case counts, the agreement between the main experiment prompts and the local scoring inputs, and the current report's 11 image links. It does not change scores or invoke a model. One original input is intentionally withheld because of a credential-like string in a saved answer. See [publication details](analysis/PUBLICATION.md).
 
-## 生成 GraphML 图文件
+The original acceptance process and its outputs are preserved in `analysis/releases/scoring-v1-20261122/MANIFEST.json`. That acceptance reproduced all retained scores, checked prompt alignment, passed 28 regression tests, and reproduced the four figures available at acceptance. Its report snapshot retains the original workstation paths, so use the current root report for portable image links.
 
-```bash
-PYTHONPATH=. .venv/bin/python -m talk_like_a_graph.graph_generators_runner \
-  --algorithm path \
-  --number_of_graphs 10 \
-  --output_path /tmp/tlag-run \
-  --split validation
+## Work with the existing results
+
+The main sources are:
+
+- `analysis/audited_final_scores.json` for traditional tasks. Use `scores` for the retained sample and `archived_scores` for all originally generated cases.
+- `analysis/node_score_audit.json` for DeepSeek and Luna node classification.
+- `analysis/scoring_audit_inputs.json.gz` for the traditional responses and graph metadata, including the recovered GLM answers.
+- `analysis/verification_prompt_inputs.json.gz` for prompt verification and node-classification responses.
+- `analysis/manual_answer_review.json` for the 284 exceptional-answer decisions, with source-text hashes.
+- `analysis/rq1_insights.json`, `analysis/rq2_insights.json`, and `analysis/rq3_insights.json` for the derived findings.
+
+Ordinary report editing and figure work should use these saved scores. The seven known ambiguous answers and their sensitivity analysis are documented in `analysis/SCORING_AUDIT.md`. Historical audit files and server statistics are retained for provenance and do not replace the accepted scores.
+
+To regenerate figures, create a local environment:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-analysis.txt
 ```
 
-输出目录类似：
+The following commands read the existing results. Independent figure generators can run in parallel.
 
-```text
-/tmp/tlag-run/undirected/path/validation/0.graphml
+```sh
+.venv/bin/python figures/plot_edge_order_example.py
+.venv/bin/python figures/plot_final_accuracy.py
+.venv/bin/python figures/plot_order_consistency.py
+.venv/bin/python figures/plot_shortest_path_ppr.py
+.venv/bin/python figures/plot_node_ppr.py
+.venv/bin/python figures/plot_task_sensitivity.py
+.venv/bin/python figures/plot_rq2_findings.py --figure ranking
+.venv/bin/python figures/plot_rq2_findings.py --figure prompting
+.venv/bin/python figures/plot_rq3_findings.py --figure prompt
+.venv/bin/python figures/plot_rq3_findings.py --figure node
+.venv/bin/python figures/plot_rq3_findings.py --figure control
 ```
 
-`--split` 可用 `train`、`validation`、`test`；不同 split 使用固定随机种子。`--directed` 可以生成有向图。
+Replaying the scorer is a separate operation. Exact replay of the original accepted input requires the unredacted file retained in the local source project. The GitHub redaction changes its file hash and has not been presented as a new scoring release. If replay is needed, do it in a disposable copy, following `analysis/SCORING_AUDIT.md`. The dependency order is node scoring, traditional review, RQ1, RQ2, then derived metrics and sensitivity checks. RQ3 reads the saved input and score files through `analysis/analyze_rq3.py`. Do not overwrite the frozen release. A scoring-policy change or confirmed correction requires a new documented version.
 
-## 生成图文本和任务答案
+## Inspect or run the model experiments
 
-```python
-from talk_like_a_graph import graph_generators, graph_tasks, graph_text_encoders
+The main design is `experiments/half-scale/experiment.json`. It specifies 17,500 traditional prompts per model and 2,250 node-classification prompts per model. Each manifest includes the exact prompt, graph, query, order, and case ID. The accepted analysis later applies the sample exclusions described above.
 
-graph = graph_generators.generate_graphs(
-    number_of_graphs=1,
-    algorithm="path",
-    directed=False,
-    random_seed=123,
-)[0]
+The runner requires Python 3.12 or later because it uses `itertools.batched`. Install the core upstream dependencies in an environment separate from the analysis environment:
 
-text = graph_text_encoders.encode_graph(graph, graph_encoder="incident")
-example = graph_tasks.NodeCount().prepare_examples_dict(
-    [graph], ["path"], "incident"
-)[0]
-
-print(text)
-print(example["question"])
-print(example["answer"])
+```sh
+git submodule update --init --recursive
+python3 -m venv experiments/.venv
+experiments/.venv/bin/python -m pip install -e experiments/GraphDO
+experiments/.venv/bin/python experiments/half-scale/run.py \
+  --group traditional --model deepseek-v4.1-flash \
+  --initial 1 --maximum 1 --dry-run
+experiments/.venv/bin/python experiments/half-scale/run.py \
+  --group node --model gpt-6-luna \
+  --initial 1 --maximum 1 --dry-run
 ```
 
-这一步可以验证编码方法和图任务的逻辑，不需要调用 LLM。`incident` 编码会逐节点列出相邻节点，适合复现论文中节点度数和连通节点任务的输入形式。
+Dry runs check the saved manifests and make no requests. Actual runs require the original host integrations or equivalent user-configured endpoints:
 
-## 接入本地 LLM
+- DeepSeek uses the user's `~/.local/bin/claude-ds` launcher with an explicit model and tools disabled.
+- GLM reads `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` from the `env` object in the user's `~/.claude/settings.json`.
+- Luna uses an authenticated `codex` CLI with an explicit model and the recorded invocation settings.
 
-先在项目根目录查看可用配置：
+Credentials are external to this repository. Removing `--dry-run` makes model requests and writes resumable SQLite results under `experiments/half-scale/runs/`. The model runners use POSIX facilities. The batch launch and recovery shell scripts were written for Linux and retain the original server concurrency settings.
 
-```bash
-python3 query_llms.py --list
-```
+The initial GLM adapter caps output at 400 tokens. The historical recovery scripts under `experiments/half-scale/repair-glm-4096/` selected 5,991 truncated or blank traditional answers and retried with larger limits. They depend on the original SQLite databases, which remain on the server. Their recovered answers are already included in the saved scoring inputs. Their old scoring code is superseded by `analysis/score_answers.py`.
 
-然后可以把上一步生成的 `example["question"]` 保存或直接传给：
+## Benchmark generation and provenance
 
-```bash
-python3 query_llms.py --profile claude-glm --prompt "在这里放入图问题文本"
-python3 query_llms.py --profile claude-ds --prompt "在这里放入图问题文本"
-python3 query_llms.py --profile codex --prompt "在这里放入图问题文本"
-```
+Use the committed manifests for the recorded experiment. The generation scripts refuse to replace an existing benchmark directory. A fresh generation is a new dataset and needs its own provenance and validation.
 
-要复现准确率，需要对一批随机图重复生成问题、记录模型回答，并根据任务类型解析答案。论文中的 GraphQA 评测主要比较的就是编码方式、提问方式、图结构和模型规模对准确率的影响。
+`experiments/requirements.lock.txt` records the original core server versions. Each main benchmark's `provenance.json` records the package versions actually used for that group. Node generation additionally needs Torch, PyTorch Geometric, and littleballoffur, as well as citation-network downloads. It used the Forest Fire compatibility change documented in `experiments/half-scale/logs/node-sampler-compatibility.json`. The installed package trees and dataset caches are not included.
 
-本项目还提供了一个 10 图环检测小实验：
-
-```bash
-PYTHONPATH=. talk-like-a-graph/.venv311/bin/python \
-  experiments/graph_api_trial.py
-```
-
-它使用固定随机种子和 `incident` 编码，分别询问 GLM、DeepSeek 和 Codex
-接口，并将原始回答保存到 `experiments/graph_api_trial_results.json`。Codex
-网关通过其 OpenAI-compatible `/v1/chat/completions` 路由调用。
-
-## 当前限制
-
-- 论文实验依赖 PaLM 62B/PaLM 2 服务；本地仓库不包含这些模型权重或原始服务配置。
-- README 中提到的 `graphqa/graph_generator.sh` 和 `task_generator.sh` 不在当前公开仓库中，需要使用 Python 模块入口。
-- 仓库自带的两个测试文件使用了旧式 `absl` 测试类继承方式，在现代 `absl-py` 下会触发 MRO 错误；图生成、编码和任务逻辑本身可以独立运行。
-- `graph_generators_runner.py` 原本使用了不存在的 `os.Open`；本仓库已修正为带上下文管理的内置 `open`。
+The source experiment was imported from `/mnt/new_ssd_3/taojie/comp5222-graphdo/` on the project server on 2026-11-22. The report, reviewed scores, audit evidence, and figures were imported from the local COMP5222 project. The upstream GraphDO commit, included frozen files, and original local snapshot are unchanged. The root report's image URLs were converted to relative paths for GitHub. The one input redaction and omitted frozen file are recorded in `analysis/PUBLICATION_MANIFEST.json`.

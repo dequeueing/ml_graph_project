@@ -1,6 +1,0 @@
-{
-  "profiles": ["claude-glm"],
-  "max_tokens": 1024,
-  "timeout_seconds": 120,
-  "output": "rq1/manifests/rq1_full_adjacency.jsonl"
-}

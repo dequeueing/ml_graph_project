@@ -1,0 +1,52 @@
+{
+  "tasks": [
+    "connectivity",
+    "cycle",
+    "shortest_path",
+    "hamilton",
+    "topology"
+  ],
+  "graphs_per_group": 140,
+  "prompt_styles": [
+    "zero_shot",
+    "zero_shot_cot",
+    "few_shot",
+    "cot",
+    "cot_bag"
+  ],
+  "repeats": 1,
+  "group": "traditional",
+  "orders": [
+    "random",
+    "bfs",
+    "dfs",
+    "pagerank",
+    "ppr"
+  ],
+  "models": [
+    "deepseek-v4.1-flash",
+    "glm-5.3",
+    "gpt-6-luna"
+  ],
+  "seed": 42,
+  "upstream_commit": "4ba8f925c76574e2fca8d4f32f753b57a341b44f",
+  "graph_groups": {
+    "connectivity": 140,
+    "cycle": 140,
+    "shortest_path": 140,
+    "hamilton": 140,
+    "topology": 140
+  },
+  "grader_checks": {
+    "reference_accepted": 601,
+    "hamilton_no_path": 99
+  },
+  "prompt_count": 17500,
+  "planned_requests": 52500,
+  "packages": {
+    "networkx": "3.7",
+    "numpy": "2.5.5",
+    "scipy": "1.18.1"
+  },
+  "manifest_sha256": "d4dc4fbe2b111c1cacc049f0a6c59ed9e40b70e1f202e90f41dabae73c30acde"
+}

@@ -1,25 +1,34 @@
 __pycache__/
 *.py[cod]
+.DS_Store
 .venv/
-.venv*/
+.python/
+.uv-cache/
+.mplconfig/
 .pytest_cache/
-.mypy_cache/
-.ipynb_checkpoints/
-.git-local/
-
-# Local credentials and machine-specific configuration.
 .env
 .env.*
-*.env
-.codex/
-.aws/
-.agents/
-
-# Generated graph datasets and local run outputs.
-graphqa/
-outputs/
-generated_graphs/
-
-# Full RQ1 API outputs (large, resumable local artifacts).
-rq1/results/rq1_full_*.jsonl
-rq1/logs/
+!.env.example
+auth.json
+settings.json
+*.pem
+*.key
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+*.pid
+*.lock
+*.log
+experiments/**/runs/
+experiments/**/scratch/
+experiments/half-scale/data/
+experiments/half-scale/node-network/
+experiments/half-scale/node-packages/
+experiments/half-scale/node-sampler/
+.overleaf-tools/
+.olsync-state.json
+.olignore
+PROJECT_MEMORY.md
+# Original raw input contains a credential-like value. Keep only its redacted export.
+analysis/releases/scoring-v1-20261122/analysis/scoring_audit_inputs.json.gz

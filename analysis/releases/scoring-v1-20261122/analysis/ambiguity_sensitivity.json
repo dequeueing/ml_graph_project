@@ -1,0 +1,92 @@
+{
+  "source_sha256": "784085e0897ff8f6d5bf996d63ad40dce792c2c8f8b94d2f13bdb89a12aaa96a",
+  "review_sha256": "6e818c502a7eb6f1aa9a0bd72791f4dbd92a309ddb1551bf08f962a8de1d6ff1",
+  "ambiguous_cases": [
+    [
+      "deepseek-v4.1-flash",
+      "topology/5/random/cot_bag/r1"
+    ],
+    [
+      "gpt-6-luna",
+      "shortest_path/59/pagerank/few_shot/r1"
+    ],
+    [
+      "glm-5.3",
+      "shortest_path/131/ppr/few_shot/r1"
+    ],
+    [
+      "glm-5.3",
+      "hamilton/71/dfs/few_shot/r1"
+    ],
+    [
+      "glm-5.3",
+      "topology/60/random/zero_shot/r1"
+    ],
+    [
+      "glm-5.3",
+      "topology/87/dfs/cot/r1"
+    ],
+    [
+      "glm-5.3",
+      "topology/114/bfs/zero_shot_cot/r1"
+    ]
+  ],
+  "assignments_tested": 128,
+  "significant_comparisons_min": 0,
+  "significant_comparisons_max": 0,
+  "minimum_holm_p_range": [
+    0.16383379697799683,
+    0.16383379697799683
+  ],
+  "maximum_change_in_mean_ordering_effect_pp": 0.07985347985347985,
+  "mean_ordering_effect_ranges": {
+    "deepseek-v4.1-flash/bfs": [
+      0.30842490842490844,
+      0.33699633699633696
+    ],
+    "deepseek-v4.1-flash/dfs": [
+      -0.11355311355311357,
+      -0.084981684981685
+    ],
+    "deepseek-v4.1-flash/pagerank": [
+      0.6967032967032968,
+      0.7252747252747254
+    ],
+    "deepseek-v4.1-flash/ppr": [
+      0.3208791208791209,
+      0.3494505494505495
+    ],
+    "gpt-6-luna/bfs": [
+      0.07472527472527479,
+      0.07472527472527479
+    ],
+    "gpt-6-luna/dfs": [
+      1.1128205128205129,
+      1.1128205128205129
+    ],
+    "gpt-6-luna/pagerank": [
+      0.6388278388278389,
+      0.6673992673992675
+    ],
+    "gpt-6-luna/ppr": [
+      1.227106227106227,
+      1.227106227106227
+    ],
+    "glm-5.3/bfs": [
+      -0.5377289377289377,
+      -0.4805860805860806
+    ],
+    "glm-5.3/dfs": [
+      0.028571428571428564,
+      0.13699633699633698
+    ],
+    "glm-5.3/pagerank": [
+      0.10183150183150186,
+      0.13040293040293044
+    ],
+    "glm-5.3/ppr": [
+      -0.2915750915750916,
+      -0.23443223443223443
+    ]
+  }
+}

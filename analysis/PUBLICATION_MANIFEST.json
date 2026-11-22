@@ -1,0 +1,20 @@
+{
+  "export_date": "2026-11-22",
+  "scoring_release": "scoring-v1-20261122",
+  "note": "Privacy redaction in the GitHub export only. Original local frozen input and all accepted scores remain unchanged. This is not a new scoring release.",
+  "redactions": [
+    {
+      "file": "analysis/scoring_audit_inputs.json.gz",
+      "model": "glm-5.3",
+      "case_id": "topology/88/dfs/zero_shot_cot/r1",
+      "field": "text",
+      "replacements": 1,
+      "reason": "Credential-like string appended to one saved model answer.",
+      "original_file_sha256": "794a17b5715a9ba6afb734b1626c628b987a928bb34837857ed9499b0b7ee005",
+      "export_file_sha256": "318c47ab92ca02b3302314b03a239055f5c821907c11e135353238cfd96bd942"
+    }
+  ],
+  "omitted_frozen_files": [
+    "analysis/releases/scoring-v1-20261122/analysis/scoring_audit_inputs.json.gz"
+  ]
+}

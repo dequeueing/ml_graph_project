@@ -1,0 +1,25 @@
+{
+  "upstream_commit": "4ba8f925c76574e2fca8d4f32f753b57a341b44f",
+  "seed": 42,
+  "graphs_per_task": 150,
+  "tasks": [
+    "cycle",
+    "topology"
+  ],
+  "orders": [
+    "random",
+    "bfs",
+    "dfs"
+  ],
+  "prompt_styles": [
+    "few_shot"
+  ],
+  "models": [
+    "deepseek-v4.1-flash",
+    "glm-5.3",
+    "gpt-6-luna"
+  ],
+  "prompt_count": 900,
+  "planned_requests": 2700,
+  "manifest_sha256": "eea9df8b30c67709e9554ee644816bbb7c43e3538ca18c145669e2da6a253a27"
+}

@@ -1,0 +1,468 @@
+{
+  "models": {
+    "deepseek-v4.1-flash": {
+      "mean_accuracy": 97.27120879120879,
+      "order_means": {
+        "random": 97.0058608058608,
+        "bfs": 97.34285714285714,
+        "dfs": 96.92087912087912,
+        "pagerank": 97.73113553113554,
+        "ppr": 97.35531135531136
+      },
+      "tasks": {
+        "shortest_path": {
+          "random": 96.28571428571429,
+          "bfs": 98.14285714285714,
+          "dfs": 97.14285714285714,
+          "pagerank": 98.28571428571429,
+          "ppr": 98.85714285714286
+        },
+        "cycle": {
+          "random": 99.85714285714286,
+          "bfs": 99.85714285714286,
+          "dfs": 100.0,
+          "pagerank": 100.0,
+          "ppr": 100.0
+        },
+        "hamilton": {
+          "random": 89.74358974358974,
+          "bfs": 90.0,
+          "dfs": 88.46153846153845,
+          "pagerank": 90.51282051282051,
+          "ppr": 88.2051282051282
+        },
+        "connectivity": {
+          "random": 100.0,
+          "bfs": 100.0,
+          "dfs": 100.0,
+          "pagerank": 100.0,
+          "ppr": 100.0
+        },
+        "topology": {
+          "random": 99.14285714285714,
+          "bfs": 98.71428571428571,
+          "dfs": 99.0,
+          "pagerank": 99.85714285714286,
+          "ppr": 99.71428571428571
+        }
+      },
+      "identical_hamilton_pairs": 390,
+      "identical_prompt_disagreements": 47,
+      "ppr_shortest": {
+        "zero_shot": 6.428571428571429,
+        "zero_shot_cot": 1.4285714285714286,
+        "few_shot": 2.857142857142857,
+        "cot": -0.7142857142857143,
+        "cot_bag": 2.857142857142857
+      },
+      "node": {
+        "random": 67.77777777777777,
+        "deltas": {
+          "bfs": -0.6666666666666666,
+          "dfs": 0.6666666666666666,
+          "pagerank": 2.444444444444444,
+          "ppr": 2.4444444444444446
+        },
+        "outcomes": {
+          "higher": 14,
+          "equal": 4,
+          "lower": 6
+        }
+      }
+    },
+    "gpt-6-luna": {
+      "mean_accuracy": 87.16380952380952,
+      "order_means": {
+        "random": 86.55311355311355,
+        "bfs": 86.62783882783883,
+        "dfs": 87.66593406593407,
+        "pagerank": 87.1919413919414,
+        "ppr": 87.78021978021978
+      },
+      "tasks": {
+        "shortest_path": {
+          "random": 79.57142857142857,
+          "bfs": 80.71428571428571,
+          "dfs": 79.42857142857143,
+          "pagerank": 83.42857142857143,
+          "ppr": 88.14285714285714
+        },
+        "cycle": {
+          "random": 98.28571428571429,
+          "bfs": 99.42857142857143,
+          "dfs": 99.0,
+          "pagerank": 98.71428571428571,
+          "ppr": 99.14285714285714
+        },
+        "hamilton": {
+          "random": 72.05128205128206,
+          "bfs": 71.28205128205128,
+          "dfs": 74.61538461538461,
+          "pagerank": 64.1025641025641,
+          "ppr": 64.61538461538461
+        },
+        "connectivity": {
+          "random": 99.14285714285714,
+          "bfs": 99.57142857142857,
+          "dfs": 99.85714285714286,
+          "pagerank": 99.71428571428572,
+          "ppr": 98.28571428571429
+        },
+        "topology": {
+          "random": 83.71428571428572,
+          "bfs": 82.14285714285714,
+          "dfs": 85.42857142857143,
+          "pagerank": 90.0,
+          "ppr": 88.71428571428572
+        }
+      },
+      "identical_hamilton_pairs": 390,
+      "identical_prompt_disagreements": 92,
+      "ppr_shortest": {
+        "zero_shot": 7.857142857142857,
+        "zero_shot_cot": 10.714285714285714,
+        "few_shot": 12.857142857142858,
+        "cot": 2.857142857142857,
+        "cot_bag": 8.571428571428571
+      },
+      "node": {
+        "random": 56.888888888888886,
+        "deltas": {
+          "bfs": -2.888888888888889,
+          "dfs": -3.1111111111111107,
+          "pagerank": -11.11111111111111,
+          "ppr": -11.555555555555555
+        },
+        "outcomes": {
+          "higher": 6,
+          "equal": 1,
+          "lower": 17
+        }
+      }
+    },
+    "glm-5.3": {
+      "mean_accuracy": 95.77611721611721,
+      "order_means": {
+        "random": 95.89304029304029,
+        "bfs": 95.38388278388278,
+        "dfs": 95.95018315018315,
+        "pagerank": 96.02344322344322,
+        "ppr": 95.63003663003663
+      },
+      "tasks": {
+        "shortest_path": {
+          "random": 96.85714285714286,
+          "bfs": 94.57142857142857,
+          "dfs": 95.42857142857143,
+          "pagerank": 95.14285714285714,
+          "ppr": 94.28571428571428
+        },
+        "cycle": {
+          "random": 99.85714285714286,
+          "bfs": 99.85714285714286,
+          "dfs": 99.57142857142857,
+          "pagerank": 99.71428571428572,
+          "ppr": 99.71428571428572
+        },
+        "hamilton": {
+          "random": 97.17948717948718,
+          "bfs": 98.2051282051282,
+          "dfs": 97.17948717948718,
+          "pagerank": 98.97435897435898,
+          "ppr": 97.43589743589743
+        },
+        "connectivity": {
+          "random": 100.0,
+          "bfs": 100.0,
+          "dfs": 100.0,
+          "pagerank": 100.0,
+          "ppr": 99.85714285714286
+        },
+        "topology": {
+          "random": 85.57142857142857,
+          "bfs": 84.28571428571428,
+          "dfs": 87.57142857142857,
+          "pagerank": 86.28571428571429,
+          "ppr": 86.85714285714286
+        }
+      },
+      "identical_hamilton_pairs": 390,
+      "identical_prompt_disagreements": 14,
+      "ppr_shortest": {
+        "zero_shot": -1.4285714285714286,
+        "zero_shot_cot": -0.7142857142857143,
+        "few_shot": -6.428571428571429,
+        "cot": 0.0,
+        "cot_bag": -4.285714285714286
+      }
+    }
+  },
+  "source_sha256": "784085e0897ff8f6d5bf996d63ad40dce792c2c8f8b94d2f13bdb89a12aaa96a",
+  "rq1_sha256": "00acd94bd13c37d99d114565a120be361304d1f76414f08456addb97e4daf728",
+  "rq2_sha256": "bc9c17d7adca30f52b6be132e4caf335b84010273e5319a58af9c85c065fffc1",
+  "rq2_rankings": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "prompt": "zero_shot",
+      "tasks_descending": [
+        "hamilton",
+        "shortest_path",
+        "topology",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "prompt": "zero_shot_cot",
+      "tasks_descending": [
+        "hamilton",
+        "topology",
+        "shortest_path",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "prompt": "few_shot",
+      "tasks_descending": [
+        "shortest_path",
+        "topology",
+        "hamilton",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "shortest_path"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "prompt": "cot",
+      "tasks_descending": [
+        "hamilton",
+        "shortest_path",
+        "topology",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "deepseek-v4.1-flash",
+      "prompt": "cot_bag",
+      "tasks_descending": [
+        "hamilton",
+        "shortest_path",
+        "topology",
+        "cycle",
+        "connectivity"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "glm-5.3",
+      "prompt": "zero_shot",
+      "tasks_descending": [
+        "topology",
+        "hamilton",
+        "cycle",
+        "shortest_path",
+        "connectivity"
+      ],
+      "highest_tasks": [
+        "topology"
+      ],
+      "binary_tasks_both_below_nonbinary": false
+    },
+    {
+      "model": "glm-5.3",
+      "prompt": "zero_shot_cot",
+      "tasks_descending": [
+        "topology",
+        "shortest_path",
+        "hamilton",
+        "cycle",
+        "connectivity"
+      ],
+      "highest_tasks": [
+        "topology"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "glm-5.3",
+      "prompt": "few_shot",
+      "tasks_descending": [
+        "shortest_path",
+        "hamilton",
+        "topology",
+        "cycle",
+        "connectivity"
+      ],
+      "highest_tasks": [
+        "shortest_path"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "glm-5.3",
+      "prompt": "cot",
+      "tasks_descending": [
+        "hamilton",
+        "topology",
+        "shortest_path",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "glm-5.3",
+      "prompt": "cot_bag",
+      "tasks_descending": [
+        "hamilton",
+        "topology",
+        "shortest_path",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "gpt-6-luna",
+      "prompt": "zero_shot",
+      "tasks_descending": [
+        "hamilton",
+        "topology",
+        "shortest_path",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "gpt-6-luna",
+      "prompt": "zero_shot_cot",
+      "tasks_descending": [
+        "shortest_path",
+        "hamilton",
+        "topology",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "shortest_path"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "gpt-6-luna",
+      "prompt": "few_shot",
+      "tasks_descending": [
+        "shortest_path",
+        "hamilton",
+        "topology",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "shortest_path"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "gpt-6-luna",
+      "prompt": "cot",
+      "tasks_descending": [
+        "hamilton",
+        "topology",
+        "shortest_path",
+        "cycle",
+        "connectivity"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    },
+    {
+      "model": "gpt-6-luna",
+      "prompt": "cot_bag",
+      "tasks_descending": [
+        "hamilton",
+        "topology",
+        "shortest_path",
+        "connectivity",
+        "cycle"
+      ],
+      "highest_tasks": [
+        "hamilton"
+      ],
+      "binary_tasks_both_below_nonbinary": true
+    }
+  ],
+  "rq2_prompt_contrasts": [
+    {
+      "before": "zero_shot",
+      "after": "zero_shot_cot",
+      "variance_changes": {
+        "lower": 5,
+        "equal": 5,
+        "higher": 5
+      }
+    },
+    {
+      "before": "few_shot",
+      "after": "cot",
+      "variance_changes": {
+        "lower": 8,
+        "equal": 2,
+        "higher": 5
+      }
+    },
+    {
+      "before": "zero_shot_cot",
+      "after": "cot",
+      "variance_changes": {
+        "lower": 9,
+        "equal": 3,
+        "higher": 3
+      }
+    },
+    {
+      "before": "cot",
+      "after": "cot_bag",
+      "variance_changes": {
+        "lower": 3,
+        "equal": 3,
+        "higher": 9
+      }
+    }
+  ]
+}
